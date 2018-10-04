@@ -6,7 +6,7 @@ import os
 from django.db import models
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.timezone import now
 
 from utils.models import get_crumbs

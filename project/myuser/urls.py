@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth.views import (login, logout, password_reset,
                                        password_reset_done,
                                        password_reset_confirm)
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from . import forms
 from . import views

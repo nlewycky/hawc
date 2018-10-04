@@ -1,7 +1,7 @@
 from django.core.mail import send_mail, mail_admins
 from django import forms
 from django.conf import settings
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 
 from selectable.forms import AutoCompleteWidget, AutoCompleteSelectMultipleWidget

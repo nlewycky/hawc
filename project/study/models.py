@@ -8,7 +8,7 @@ from django.db import models, transaction
 from django.apps import apps
 from django.core.exceptions import (ValidationError, ObjectDoesNotExist,
                                     MultipleObjectsReturned)
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import Http404
 
 from reversion import revisions as reversion

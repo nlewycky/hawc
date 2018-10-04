@@ -2,7 +2,7 @@ import logging
 
 from django.apps import apps
 from django.core import exceptions
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Count
 
 from rest_framework import permissions, status, viewsets, decorators, filters

@@ -4,7 +4,7 @@ import os
 
 from django.db import models
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.validators import MinValueValidator
 from django.conf import settings
 from django.contrib.contenttypes import fields

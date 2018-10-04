@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth import get_backends
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from crispy_forms import layout as cfl
 from crispy_forms import bootstrap as cfb

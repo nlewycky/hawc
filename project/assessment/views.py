@@ -6,7 +6,7 @@ from django.db.models import Count
 from django.apps import apps
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.cache import cache
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponseNotAllowed
 from django.utils.decorators import method_decorator

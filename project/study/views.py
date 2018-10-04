@@ -1,5 +1,5 @@
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.apps import apps
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect

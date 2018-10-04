@@ -6,7 +6,7 @@ import collections
 
 from django.db import models
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.html import strip_tags
 
 from reversion import revisions as reversion

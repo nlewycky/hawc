@@ -1,5 +1,5 @@
 import os
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),

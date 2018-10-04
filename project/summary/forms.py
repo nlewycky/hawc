@@ -3,7 +3,7 @@ import json
 
 from crispy_forms import layout as cfl
 from django import forms
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from selectable import forms as selectable
 
 from assessment.models import EffectTag
