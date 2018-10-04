@@ -1,4 +1,4 @@
-from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ class Study(viewsets.ReadOnlyModelViewSet):
     model = models.Study
     pagination_class = DisabledPagination
     permission_classes = (AssessmentLevelPermissions, )
-    filter_backends = (InAssessmentFilter, filters.DjangoFilterBackend)
+    filter_backends = (InAssessmentFilter, DjangoFilterBackend)
     list_actions = ['list', 'rob_scores', ]
 
     def get_serializer_class(self):

@@ -53,7 +53,7 @@ TEMPLATES = [
 
 
 # Middleware
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -275,6 +275,8 @@ CHEMSPIDER_TOKEN = os.getenv('CHEMSPIDER_TOKEN', '')
 
 # Django rest framework settings
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
     'PAGE_SIZE': 10,
     'COERCE_DECIMAL_TO_STRING': False

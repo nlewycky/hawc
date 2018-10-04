@@ -2,7 +2,7 @@
 
 from django.shortcuts import get_object_or_404
 
-from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.decorators import list_route
 from rest_framework import viewsets
@@ -23,7 +23,7 @@ class RiskOfBiasDomain(viewsets.ReadOnlyModelViewSet):
     model = models.RiskOfBiasDomain
     pagination_class = DisabledPagination
     permission_classes = (AssessmentLevelPermissions,)
-    filter_backends = (InAssessmentFilter, filters.DjangoFilterBackend)
+    filter_backends = (InAssessmentFilter, DjangoFilterBackend)
     serializer_class = serializers.AssessmentDomainSerializer
 
     def get_queryset(self):
@@ -35,7 +35,7 @@ class RiskOfBias(viewsets.ModelViewSet):
     model = models.RiskOfBias
     pagination_class = DisabledPagination
     permission_classes = (AssessmentLevelPermissions,)
-    filter_backends = (InAssessmentFilter, filters.DjangoFilterBackend)
+    filter_backends = (InAssessmentFilter, DjangoFilterBackend)
     serializer_class = serializers.RiskOfBiasSerializer
 
     def get_queryset(self):
