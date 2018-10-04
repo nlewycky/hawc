@@ -24,7 +24,8 @@ class Criteria(models.Model):
     objects = managers.CriteriaManager()
 
     assessment = models.ForeignKey(
-        'assessment.Assessment')
+        'assessment.Assessment',
+        on_delete=models.CASCADE)
     description = models.TextField()
     created = models.DateTimeField(
         auto_now_add=True)
@@ -68,9 +69,10 @@ class Country(models.Model):
 
 class AdjustmentFactor(models.Model):
     objects = managers.AdjustmentFactorManager()
-    
+
     assessment = models.ForeignKey(
-        'assessment.Assessment')
+        'assessment.Assessment',
+        on_delete=models.CASCADE)
     description = models.TextField()
     created = models.DateTimeField(
         auto_now_add=True)
@@ -121,10 +123,12 @@ class StudyPopulationCriteria(models.Model):
     )
     criteria = models.ForeignKey(
         'Criteria',
-        related_name='spcriteria')
+        related_name='spcriteria',
+        on_delete=models.CASCADE)
     study_population = models.ForeignKey(
         'StudyPopulation',
-        related_name='spcriteria')
+        related_name='spcriteria',
+        on_delete=models.CASCADE)
     criteria_type = models.CharField(
         max_length=1,
         choices=CRITERIA_TYPE)
@@ -160,7 +164,8 @@ class StudyPopulation(models.Model):
 
     study = models.ForeignKey(
         'study.Study',
-        related_name="study_populations")
+        related_name="study_populations",
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=256)
     design = models.CharField(
@@ -177,7 +182,8 @@ class StudyPopulation(models.Model):
         help_text="Population source (ex: general population, environmental "
                   "exposure, occupational cohort)")
     country = models.ForeignKey(
-        Country)
+        Country,
+        on_delete=models.PROTECT)
     region = models.CharField(
         max_length=128,
         blank=True)
@@ -331,7 +337,8 @@ class Outcome(BaseEndpoint):
 
     study_population = models.ForeignKey(
         StudyPopulation,
-        related_name='outcomes')
+        related_name='outcomes',
+        on_delete=models.CASCADE)
     system = models.CharField(
         max_length=128,
         blank=True,
@@ -472,11 +479,13 @@ class ComparisonSet(models.Model):
     study_population = models.ForeignKey(
         StudyPopulation,
         related_name='comparison_sets',
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     outcome = models.ForeignKey(
         Outcome,
         related_name='comparison_sets',
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=256)
     exposure = models.ForeignKey(
@@ -484,7 +493,8 @@ class ComparisonSet(models.Model):
         related_name="comparison_sets",
         help_text="Exposure-group associated with this group",
         blank=True,
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     description = models.TextField(
         blank=True)
     created = models.DateTimeField(
@@ -575,7 +585,8 @@ class Group(models.Model):
 
     comparison_set = models.ForeignKey(
         ComparisonSet,
-        related_name="groups")
+        related_name="groups",
+        on_delete=models.CASCADE)
     group_id = models.PositiveSmallIntegerField()
     name = models.CharField(
         max_length=256)
@@ -711,7 +722,8 @@ class Exposure(models.Model):
 
     study_population = models.ForeignKey(
         StudyPopulation,
-        related_name='exposures')
+        related_name='exposures',
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=128,
         help_text='Name of exposure and exposure-route')
@@ -736,7 +748,8 @@ class Exposure(models.Model):
         max_length=128,
         verbose_name="Measurement Metric")
     metric_units = models.ForeignKey(
-        'assessment.DoseUnits')
+        'assessment.DoseUnits',
+        on_delete=models.CASCADE)
     metric_description = models.TextField(
         verbose_name="Measurement Description")
     analytical_method = models.TextField(
@@ -966,7 +979,8 @@ class GroupNumericalDescriptions(models.Model):
 
     group = models.ForeignKey(
         Group,
-        related_name="descriptions")
+        related_name="descriptions",
+        on_delete=models.CASCADE)
     description = models.CharField(
         max_length=128,
         help_text="Description if numeric ages do not make sense for this "
@@ -1049,9 +1063,11 @@ class ResultAdjustmentFactor(models.Model):
     objects = managers.ResultAdjustmentFactorManager()
 
     adjustment_factor = models.ForeignKey('AdjustmentFactor',
-        related_name='resfactors')
+        related_name='resfactors',
+        on_delete=models.CASCADE)
     result = models.ForeignKey('Result',
-        related_name='resfactors')
+        related_name='resfactors',
+        on_delete=models.CASCADE)
     included_in_final_model = models.BooleanField(default=True)
 
     COPY_NAME = "rfactors"
@@ -1103,14 +1119,17 @@ class Result(models.Model):
         max_length=256)
     outcome = models.ForeignKey(
         Outcome,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     comparison_set = models.ForeignKey(
         ComparisonSet,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     metric = models.ForeignKey(
         ResultMetric,
         related_name="results",
-        help_text="&nbsp;")
+        help_text="&nbsp;",
+        on_delete=models.CASCADE)
     metric_description = models.TextField(
         blank=True,
         help_text="Add additional text describing the metric used, if needed.")
@@ -1299,10 +1318,12 @@ class GroupResult(models.Model):
 
     result = models.ForeignKey(
         Result,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     group = models.ForeignKey(
         Group,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     n = models.PositiveIntegerField(
         blank=True,
         null=True,

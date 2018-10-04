@@ -30,7 +30,8 @@ class MetaProtocol(models.Model):
 
     study = models.ForeignKey(
         'study.Study',
-        related_name="meta_protocols")
+        related_name="meta_protocols",
+        on_delete=models.CASCADE)
     name = models.CharField(
         verbose_name="Protocol name",
         max_length=128)
@@ -145,7 +146,8 @@ class MetaResult(models.Model):
 
     protocol = models.ForeignKey(
         MetaProtocol,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     label = models.CharField(
         max_length=128)
     data_location = models.CharField(
@@ -163,7 +165,8 @@ class MetaResult(models.Model):
         blank=True)
     number_studies = models.PositiveSmallIntegerField()
     metric = models.ForeignKey(
-        ResultMetric)
+        ResultMetric,
+        on_delete=models.PROTECT)
     statistical_notes = models.TextField(
         blank=True)
     n = models.PositiveIntegerField(
@@ -375,12 +378,14 @@ class SingleResult(models.Model):
 
     meta_result = models.ForeignKey(
         MetaResult,
-        related_name="single_results")
+        related_name="single_results",
+        on_delete=models.CASCADE)
     study = models.ForeignKey(
         'study.Study',
         related_name="single_results",
         blank=True,
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     exposure_name = models.CharField(
         max_length=128,
         help_text='Enter a descriptive-name for the single study result '

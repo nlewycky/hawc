@@ -69,7 +69,10 @@ class HAWCUser(AbstractBaseUser, PermissionsMixin):
 class UserProfile(models.Model):
     objects = managers.UserProfileManager()
 
-    user = models.OneToOneField(HAWCUser, related_name='profile')
+    user = models.OneToOneField(
+        HAWCUser,
+        related_name='profile',
+        on_delete=models.CASCADE)
     HERO_access = models.BooleanField(
         default=False,
         verbose_name='HERO access',

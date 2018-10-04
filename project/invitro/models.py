@@ -23,7 +23,8 @@ class IVChemical(models.Model):
 
     study = models.ForeignKey(
         'study.Study',
-        related_name='ivchemicals')
+        related_name='ivchemicals',
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=128)
     cas = models.CharField(
@@ -124,7 +125,8 @@ class IVCellType(models.Model):
 
     study = models.ForeignKey(
         'study.Study',
-        related_name='ivcelltypes')
+        related_name='ivcelltypes',
+        on_delete=models.CASCADE)
     species = models.CharField(
         max_length=64)
     strain = models.CharField(
@@ -186,12 +188,14 @@ class IVExperiment(models.Model):
 
     study = models.ForeignKey(
         'study.Study',
-        related_name='ivexperiments')
+        related_name='ivexperiments',
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=128)
     cell_type = models.ForeignKey(
         IVCellType,
-        related_name='ivexperiments')
+        related_name='ivexperiments',
+        on_delete=models.CASCADE)
     transfection = models.CharField(
         max_length=256,
         help_text="Details on transfection methodology and details on genes or "
@@ -238,7 +242,8 @@ class IVExperiment(models.Model):
         help_text="Additional details related to controls")
     dose_units = models.ForeignKey(
         'assessment.DoseUnits',
-        related_name='ivexperiments')
+        related_name='ivexperiments',
+        on_delete=models.CASCADE)
 
     COPY_NAME = 'ivexperiments'
 
@@ -373,15 +378,18 @@ class IVEndpoint(BaseEndpoint):
 
     experiment = models.ForeignKey(
         IVExperiment,
-        related_name="endpoints")
+        related_name="endpoints",
+        on_delete=models.CASCADE)
     chemical = models.ForeignKey(
         IVChemical,
-        related_name="endpoints")
+        related_name="endpoints",
+        on_delete=models.CASCADE)
     category = models.ForeignKey(
         IVEndpointCategory,
         blank=True,
         null=True,
-        related_name="endpoints")
+        related_name="endpoints",
+        on_delete=models.CASCADE)
     assay_type = models.CharField(
         max_length=128)
     short_description = models.CharField(
@@ -575,7 +583,8 @@ class IVEndpointGroup(ConfidenceIntervalsMixin, models.Model):
 
     endpoint = models.ForeignKey(
         IVEndpoint,
-        related_name="groups")
+        related_name="groups",
+        on_delete=models.CASCADE)
     dose_group_id = models.PositiveSmallIntegerField()
     dose = models.FloatField(
         validators=[MinValueValidator(0)])
@@ -627,7 +636,8 @@ class IVBenchmark(models.Model):
 
     endpoint = models.ForeignKey(
         IVEndpoint,
-        related_name="benchmarks")
+        related_name="benchmarks",
+        on_delete=models.CASCADE)
     benchmark = models.CharField(
         max_length=32)
     value = models.FloatField()

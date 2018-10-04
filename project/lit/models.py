@@ -44,7 +44,8 @@ class Search(models.Model):
 
     assessment = models.ForeignKey(
         'assessment.Assessment',
-        related_name='literature_searches')
+        related_name='literature_searches',
+        on_delete=models.CASCADE)
     search_type = models.CharField(
         max_length=1,
         choices=SEARCH_TYPES)
@@ -330,7 +331,8 @@ class PubMedQuery(models.Model):
     MAX_QUERY_SIZE = 5000
 
     search = models.ForeignKey(
-        Search)
+        Search,
+        on_delete=models.CASCADE)
     results = models.TextField(
         blank=True)
     query_date = models.DateTimeField(
@@ -562,8 +564,13 @@ class ReferenceTags(ItemBase):
     # required to be copied when overridden tag object. See GitHub bug report:
     # https://github.com/alex/django-taggit/issues/101
     # copied directly and unchanged from "TaggedItemBase"
-    tag = models.ForeignKey(ReferenceFilterTag, related_name="%(app_label)s_%(class)s_items")
-    content_object = models.ForeignKey('Reference')
+    tag = models.ForeignKey(
+        ReferenceFilterTag,
+        related_name="%(app_label)s_%(class)s_items",
+        on_delete=models.CASCADE)
+    content_object = models.ForeignKey(
+        'Reference',
+        on_delete=models.CASCADE)
 
     @classmethod
     def tags_for(cls, model, instance=None):
@@ -581,7 +588,8 @@ class Reference(models.Model):
 
     assessment = models.ForeignKey(
         'assessment.Assessment',
-        related_name='references')
+        related_name='references',
+        on_delete=models.CASCADE)
     searches = models.ManyToManyField(
         Search,
         blank=False,

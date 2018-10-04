@@ -41,10 +41,12 @@ class Task(models.Model):
         settings.AUTH_USER_MODEL,
         blank=True,
         null=True,
-        related_name='tasks')
+        related_name='tasks',
+        on_delete=models.SET_NULL)
     study = models.ForeignKey(
         Study,
-        related_name='tasks')
+        related_name='tasks',
+        on_delete=models.CASCADE)
     type = models.PositiveSmallIntegerField(
         choices=TYPE_CHOICES)
     status = models.PositiveSmallIntegerField(
@@ -89,7 +91,6 @@ class Task(models.Model):
             return json.dumps(tasks, cls=HAWCDjangoJSONEncoder)
         else:
             return outcomes
-
 
     def save(self, *args, **kwargs):
         """Alter model business logic for timestamps and open/closed."""
