@@ -9,6 +9,7 @@ router = DefaultRouter()
 router.register(r'tags', api.ReferenceFilterTag, base_name="tags")
 
 urlpatterns = [
+    url(r'^api/', include((router.urls, 'lit'), namespace='api')),
 
     # overview
     url(r'^assessment/(?P<pk>\d+)/$',
@@ -112,6 +113,4 @@ urlpatterns = [
     url(r'^ris-export-instructions/$',
         views.RISExportInstructions.as_view(),
         name='ris_export_instructions'),
-
-    url(r'^api/', include(router.urls, namespace='api')),
 ]

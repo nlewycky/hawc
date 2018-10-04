@@ -13,7 +13,7 @@ router.register(r'result', api.MetaResult, base_name="result")
 urlpatterns = [
 
     # API
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'epimeta'), namespace='api')),
 
     # protocol views
     url(r'^study/(?P<pk>\d+)/protocol/create/$',

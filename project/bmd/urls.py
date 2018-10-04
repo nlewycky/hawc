@@ -10,7 +10,7 @@ router.register(r'session', api.Session, base_name="session")
 
 
 urlpatterns = [
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'bmd'), namespace='api')),
 
     # BMD assessment-level settings
     url(r'^assessment/(?P<pk>\d+)/settings/$',

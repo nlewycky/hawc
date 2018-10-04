@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.urls import path
 from django.views.generic import TemplateView
 import django.views.static
 
@@ -23,29 +24,29 @@ urlpatterns = [
 
     # Apps
     url(r'^user/',
-        include('myuser.urls', namespace='user')),
+        include(('myuser.urls', 'myuser'), namespace='user')),
     url(r'^assessment/',
-        include('assessment.urls', namespace='assessment')),
+        include(('assessment.urls', 'assessment'), namespace='assessment')),
     url(r'^study/',
-        include('study.urls', namespace='study')),
+        include(('study.urls', 'study'), namespace='study')),
     url(r'^ani/',
-        include('animal.urls', namespace='animal')),
+        include(('animal.urls', 'animal'), namespace='animal')),
     url(r'^epi/',
-        include('epi.urls', namespace='epi')),
+        include(('epi.urls', 'epi'), namespace='epi')),
     url(r'^epi-meta/',
-        include('epimeta.urls', namespace='meta')),
+        include(('epimeta.urls', 'epimeta'), namespace='meta')),
     url(r'^in-vitro/',
-        include('invitro.urls', namespace='invitro')),
+        include(('invitro.urls', 'invitro'), namespace='invitro')),
     url(r'^bmd/',
-        include('bmd.urls', namespace='bmd')),
+        include(('bmd.urls', 'bmd'), namespace='bmd')),
     url(r'^lit/',
-        include('lit.urls', namespace='lit')),
+        include(('lit.urls', 'lit'), namespace='lit')),
     url(r'^summary/',
-        include('summary.urls', namespace='summary')),
+        include(('summary.urls', 'summary'), namespace='summary')),
     url(r'^rob/',
-        include('riskofbias.urls', namespace='riskofbias')),
+        include(('riskofbias.urls', 'riskofbias'), namespace='riskofbias')),
     url(r'^mgmt/',
-        include('mgmt.urls', namespace='mgmt')),
+        include(('mgmt.urls', 'mgmt'), namespace='mgmt')),
 
     # Error-pages
     url(r'^403/$',
@@ -60,8 +61,7 @@ urlpatterns = [
         views.UpdateSession.as_view(), name='update_session'),
 
     # Admin
-    url(r'^admin/',
-        include(admin.site.urls), name='master_admin'),
+    path('batcave/', admin.site.urls),
     url(r'^selectable/',
         include('selectable.urls')),
 ]

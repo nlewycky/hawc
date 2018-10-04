@@ -99,7 +99,7 @@ urlpatterns = [
         name='clean_study_metrics'),
 
     # api views
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'assessment'), namespace='api')),
 
 ]
 

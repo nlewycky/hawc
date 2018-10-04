@@ -12,7 +12,7 @@ router.register(r'metrics/scores', api.AssessmentMetricScoreViewset, base_name='
 router.register(r'scores', api.AssessmentScoreViewset, base_name='scores')
 
 urlpatterns = [
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'riskofbias'), namespace='api')),
 
     # modify assessment risk of bias settings
     url(r'^assessment/(?P<pk>\d+)/$',

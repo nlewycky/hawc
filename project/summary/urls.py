@@ -13,7 +13,7 @@ router.register(r'data_pivot', api.DataPivot, base_name="data_pivot")
 urlpatterns = [
 
     # API
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'summary'), namespace='api')),
 
     # SUMMARY-TEXT
     url(r'^assessment/(?P<pk>\d+)/summaries/$',

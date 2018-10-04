@@ -30,7 +30,7 @@ router.register(r'dose-units',
 
 
 urlpatterns = [
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'animal'), namespace='api')),
 
     # Overall views
     url(r'^assessment/(?P<pk>\d+)/full-export/$',

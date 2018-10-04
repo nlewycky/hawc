@@ -11,7 +11,7 @@ router.register(r'final', api.FinalRobStudy, base_name="final")
 router.register(r'study-cleanup', api.StudyCleanupFieldsView, base_name='study-cleanup')
 
 urlpatterns = [
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'study'), namespace='api')),
 
     # study
     url(r'^assessment/(?P<pk>\d+)/$',

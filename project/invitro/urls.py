@@ -14,6 +14,7 @@ router.register(r'ivendpoint-cleanup', api.IVEndpointCleanup, base_name='ivendpo
 router.register(r'ivchemical-cleanup', api.IVChemicalCleanup, base_name='ivchemical-cleanup')
 
 urlpatterns = [
+    url(r'^api/', include((router.urls, 'invitro'), namespace='api')),
 
     # experiment
     url(r'^study/(?P<pk>\d+)/create-experiment/$',
@@ -95,7 +96,4 @@ urlpatterns = [
     url(r'^assessment/(?P<pk>\d+)/full-export/$',
         views.EndpointFullExport.as_view(),
         name='endpoints_export'),
-
-
-    url(r'^api/', include(router.urls, namespace='api')),
 ]

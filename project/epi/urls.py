@@ -17,7 +17,7 @@ router.register(r'outcome-cleanup', api.OutcomeCleanup, base_name="outcome-clean
 
 urlpatterns = [
 
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'epi'), namespace='api')),
 
     # Criteria
     url(r'^assessment/(?P<pk>\d+)/study-criteria/create/$',
