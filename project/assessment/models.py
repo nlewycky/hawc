@@ -159,7 +159,7 @@ class Assessment(models.Model):
         """
         if self.public or user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return ((user in self.project_manager.all()) or
@@ -173,7 +173,7 @@ class Assessment(models.Model):
         """
         if user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return (self.editable and
@@ -187,7 +187,7 @@ class Assessment(models.Model):
         """
         if user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return (user in self.project_manager.all())
@@ -199,7 +199,7 @@ class Assessment(models.Model):
         """
         if user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return ((user in self.project_manager.all()) or
