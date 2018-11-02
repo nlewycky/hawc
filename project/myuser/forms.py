@@ -283,10 +283,14 @@ class HAWCAuthenticationForm(AuthenticationForm):
         helper.layout.append(
             cfb.FormActions(
                 cfl.Submit('login', 'Login'),
-                cfl.HTML("""<a role="button" class="btn btn-default" href="{}">Cancel</a>""".format(reverse('home'))),
-                cfl.HTML("""<br><br>"""),
-                cfl.HTML("""<a href="{0}">Forgot your password?</a><br>""".format(reverse('user:reset_password'))),
-                cfl.HTML("""<a href="{0}">Create an account</a><br>""".format(reverse('user:new')))
+                cfl.HTML(f"""
+                    <a role="button" class="btn btn-default" href="{reverse('home')}">Cancel</a>
+                    <br><br>
+                    <a href="{reverse('user:reset_password')}">Forgot your password?</a>
+                    <br>
+                    <a href="{reverse('user:new')}">Create an account</a>
+                    <br>
+                    """),
             )
         )
 

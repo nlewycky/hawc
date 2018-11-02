@@ -1,22 +1,14 @@
 from django.conf.urls import url
-from django.contrib.auth.views import (
-    LoginView, LogoutView, PasswordResetView,
-    PasswordResetDoneView, PasswordResetConfirmView)
-from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetDoneView
 
-from . import forms
 from . import views
 
-
 urlpatterns = [
-
     url(r'^login/$',
-        LoginView.as_view(),
-        {'authentication_form': forms.HAWCAuthenticationForm},
-        'login'),
+        views.CustomLoginView.as_view(),
+        name='login'),
     url(r'^logout/$',
-        LogoutView.as_view(),
-        {'next_page': '/'},
+        views.CustomLogoutView.as_view(),
         name='logout'),
 
     url(r'^new/$',
@@ -36,19 +28,13 @@ urlpatterns = [
     url(r'^password-change/$',
         views.PasswordChange.as_view(),
         name='change_password'),
-    url(r'^password-reset/$', PasswordResetView.as_view(),
-        {"post_reset_redirect": reverse_lazy("user:reset_password_sent"),
-         "password_reset_form": forms.HAWCPasswordResetForm},
+    url(r'^password-reset/$', views.CustomPasswordResetView.as_view(),
         name='reset_password'),
     url(r'^password-reset/sent/$',
         views.PasswordResetSent.as_view(),
         name='reset_password_sent'),
     url(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
-        PasswordResetConfirmView.as_view(),
-        {
-            "set_password_form": forms.HAWCSetPasswordForm,
-            "post_reset_redirect": reverse_lazy("user:password_reset_complete")
-        },
+        views.CustomPasswordResetConfirmView.as_view(),
         name='reset_password_confirm'),
     url(r'^password-reset-done/$',
         PasswordResetDoneView.as_view(),
