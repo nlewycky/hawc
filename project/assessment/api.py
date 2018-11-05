@@ -129,7 +129,7 @@ class AssessmentRootedTagTreeViewset(viewsets.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
 
-    @decorators.detail_route(methods=('patch',))
+    @decorators.action(detail=True, methods=('patch',))
     def move(self, request, *args, **kwargs):
         instance = self.get_object()
         self.assessment = instance.get_assessment()

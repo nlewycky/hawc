@@ -6,8 +6,8 @@ from . import api, views
 
 
 router = DefaultRouter()
-router.register(r'protocol', api.MetaProtocol, base_name="protocol")
-router.register(r'result', api.MetaResult, base_name="result")
+router.register(r'protocol', api.MetaProtocol, basename="protocol")
+router.register(r'result', api.MetaResult, basename="result")
 
 
 urlpatterns = [

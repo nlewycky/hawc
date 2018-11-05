@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
-from rest_framework.decorators import list_route
+from rest_framework.decorators import action
 from rest_framework import viewsets
 from rest_framework_extensions.mixins import ListUpdateModelMixin
 
@@ -94,7 +94,7 @@ class AssessmentScoreViewset(TeamMemberOrHigherMixin, ListUpdateModelMixin, Asse
 
         return get_object_or_404(self.parent_model, pk=assessment_id)
 
-    @list_route()
+    @action(detail=False)
     def choices(self, request):
         return Response(models.RiskOfBiasScore.RISK_OF_BIAS_SCORE_CHOICES)
 

@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
-from rest_framework.decorators import list_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from assessment.api import (
@@ -36,13 +36,13 @@ class Study(viewsets.ReadOnlyModelViewSet):
                 'riskofbiases__scores__metric__domain',
             )
 
-    @list_route()
+    @action(detail=False)
     def rob_scores(self, request):
         assessment_id = tryParseInt(self.request.query_params.get('assessment_id'), -1)
         scores = self.model.objects.rob_scores(assessment_id)
         return Response(scores)
 
-    @list_route()
+    @action(detail=False)
     def types(self, request):
         study_types = self.model.STUDY_TYPE_FIELDS
         return Response(study_types)

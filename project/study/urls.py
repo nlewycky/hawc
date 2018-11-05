@@ -6,9 +6,9 @@ from . import views, api
 
 
 router = DefaultRouter()
-router.register(r'study', api.Study, base_name="study")
-router.register(r'final', api.FinalRobStudy, base_name="final")
-router.register(r'study-cleanup', api.StudyCleanupFieldsView, base_name='study-cleanup')
+router.register(r'study', api.Study, basename="study")
+router.register(r'final', api.FinalRobStudy, basename="final")
+router.register(r'study-cleanup', api.StudyCleanupFieldsView, basename='study-cleanup')
 
 urlpatterns = [
     url(r'^api/', include((router.urls, 'study'), namespace='api')),

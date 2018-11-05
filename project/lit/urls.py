@@ -6,7 +6,7 @@ from . import views, api
 
 
 router = DefaultRouter()
-router.register(r'tags', api.ReferenceFilterTag, base_name="tags")
+router.register(r'tags', api.ReferenceFilterTag, basename="tags")
 
 urlpatterns = [
     url(r'^api/', include((router.urls, 'lit'), namespace='api')),

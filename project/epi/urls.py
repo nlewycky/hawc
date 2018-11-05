@@ -6,13 +6,13 @@ from . import api, views
 
 
 router = DefaultRouter()
-router.register(r'study-population', api.StudyPopulation, base_name="study-population")
-router.register(r'exposure', api.Exposure, base_name="exposure")
-router.register(r'outcome', api.Outcome, base_name="outcome")
-router.register(r'result', api.Result, base_name="result")
-router.register(r'comparison-set', api.ComparisonSet, base_name="set")
-router.register(r'group', api.Group, base_name="group")
-router.register(r'outcome-cleanup', api.OutcomeCleanup, base_name="outcome-cleanup")
+router.register(r'study-population', api.StudyPopulation, basename="study-population")
+router.register(r'exposure', api.Exposure, basename="exposure")
+router.register(r'outcome', api.Outcome, basename="outcome")
+router.register(r'result', api.Result, basename="result")
+router.register(r'comparison-set', api.ComparisonSet, basename="set")
+router.register(r'group', api.Group, basename="group")
+router.register(r'outcome-cleanup', api.OutcomeCleanup, basename="outcome-cleanup")
 
 
 urlpatterns = [

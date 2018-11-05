@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import permissions
 
@@ -23,7 +23,7 @@ class Task(AssessmentEditViewset):
             .filter_queryset(queryset)\
             .select_related('owner', 'study')
 
-    @list_route()
+    @action(detail=False)
     def assignments(self, request):
         # Tasks assigned to user.
         qs = self.model.objects\
@@ -32,7 +32,7 @@ class Task(AssessmentEditViewset):
         serializer = serializers.TaskByAssessmentSerializer(qs, many=True)
         return Response(serializer.data)
 
-    @detail_route(methods=['get'])
+    @action(detail=True, methods=['get'])
     def assessment_assignments(self, request, pk=None):
         # Tasks assigned to user for a specific assessment
         assessment = get_object_or_404(Assessment, pk=pk)
@@ -43,7 +43,7 @@ class Task(AssessmentEditViewset):
         serializer = serializers.TaskByAssessmentSerializer(qs, many=True)
         return Response(serializer.data)
 
-    @list_route()
+    @action(detail=False)
     def dashboard(self, request):
         qs = self.filter_queryset(self.get_queryset())
         metrics = self.model.dashboard_metrics(qs)

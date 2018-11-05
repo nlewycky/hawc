@@ -6,8 +6,8 @@ from . import views, api
 
 
 router = DefaultRouter()
-router.register(r'visual', api.Visual, base_name="visual")
-router.register(r'data_pivot', api.DataPivot, base_name="data_pivot")
+router.register(r'visual', api.Visual, basename="visual")
+router.register(r'data_pivot', api.DataPivot, basename="data_pivot")
 
 
 urlpatterns = [
