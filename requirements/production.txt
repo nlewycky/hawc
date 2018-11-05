@@ -4,4 +4,4 @@
 gunicorn==19.9.0
 
 # email
-django-anymail==4.2
+django-anymail==4.3

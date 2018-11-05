@@ -227,7 +227,7 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['null'],
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
         'django': {
             'handlers': ['null'],
