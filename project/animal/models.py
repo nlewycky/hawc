@@ -102,24 +102,12 @@ class Experiment(models.Model):
         verbose_name="Chemical vehicle",
         help_text="If a vehicle was used, vehicle common-name",
         blank=True)
-    diet = models.TextField(
-        help_text="Description of animal-feed, if relevant",
-        blank=True)
     guideline_compliance = models.CharField(
         max_length=128,
         blank=True,
         help_text="""Description of any compliance methods used (i.e. use of EPA
             OECD, NTP, or other guidelines; conducted under GLP guideline
             conditions, non-GLP but consistent with guideline study, etc.)""")
-    litter_effects = models.CharField(
-        max_length=2,
-        choices=LITTER_EFFECT_CHOICES,
-        default="NA",
-        help_text="Type of controls used for litter-effects")
-    litter_effect_notes = models.CharField(
-        max_length=128,
-        help_text="Any additional notes describing how litter effects were controlled",
-        blank=True)
     description = models.TextField(
         blank=True,
         verbose_name="Description and animal husbandry",
@@ -278,11 +266,6 @@ class AnimalGroup(models.Model):
         blank=True,
         help_text='Textual life-stage description when endpoints were measured '
                   '(examples include: "parental, PND18, juvenile, adult, multiple")')
-    duration_observation = models.FloatField(
-        verbose_name="Observation duration (days)",
-        help_text="Numeric length of observation period, in days (fractions allowed)",
-        blank=True,
-        null=True)
     siblings = models.ForeignKey(
         "self",
         blank=True,
