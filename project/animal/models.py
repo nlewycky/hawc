@@ -307,6 +307,10 @@ class AnimalGroup(models.Model):
         blank=True,
         verbose_name="Description",
         help_text="Any addition notes for this animal-group.")
+    diet = models.TextField(
+        help_text="Describe diet as presented in the paper (e.g., \"soy-protein free " +
+                    "2020X Teklad,\" \"Atromin 1310\", \"standard rodent chow\").",
+        blank=True)
     created = models.DateTimeField(
         auto_now_add=True)
     last_updated = models.DateTimeField(
@@ -461,6 +465,11 @@ class DosingRegime(models.Model):
         ("Y" , "Yes (untreated and/or vehicle)"),
         ("N" , "No"))
 
+    TEXT_CLEANUP_FIELDS = (
+        'description',
+        'duration_exposure_text',
+    )
+
     dosed_animals = models.OneToOneField(
         AnimalGroup,
         related_name='dosed_animals',
@@ -480,6 +489,12 @@ class DosingRegime(models.Model):
         max_length=128,
         blank=True,
         help_text="Text-description of the exposure duration (ex: 21 days, 104 wks, GD0 to PND9, GD0 to weaning)")
+    duration_observation = models.FloatField(
+        verbose_name="Exposure-outcome duration",
+        help_text='Optional: Numeric length of time between start of exposure and outcome assessment in days. ' +
+                    'This field may be used to sort studies which is why days are used as a common metric.',
+        blank=True,
+        null=True)
     num_dose_groups = models.PositiveSmallIntegerField(
         default=4,
         validators=[MinValueValidator(1)],
@@ -699,6 +714,14 @@ class Endpoint(BaseEndpoint):
         (0, 'not reported'),
     )
 
+    LITTER_EFFECT_CHOICES = (
+        ("NA", "Not applicable"),
+        ("NR", "Not reported"),
+        ("YS", "Yes, statistical control"),
+        ("YD", "Yes, study-design"),
+        ("N",  "No"),
+        ("O",  "Other"))
+
     animal_group = models.ForeignKey(
         AnimalGroup,
         related_name="endpoints")
@@ -719,6 +742,18 @@ class Endpoint(BaseEndpoint):
         max_length=128,
         blank=True,
         help_text="Effect subtype, using common-vocabulary")
+    litter_effects = models.CharField(
+        max_length=2,
+        choices=LITTER_EFFECT_CHOICES,
+        default="NA",
+        help_text="Type of controls used for litter-effects. The \"No\" response " +
+                "will be infrequently used. More typically the information will be " +
+                "\"Not reported\" and assumed not considered. Only use \"No\" if it " +
+                "is explicitly mentioned in the study that litter was not controlled for.")
+    litter_effect_notes = models.CharField(
+        max_length=128,
+        help_text="Any additional notes describing how litter effects were controlled",
+        blank=True)
     observation_time = models.FloatField(
         blank=True,
         null=True,
