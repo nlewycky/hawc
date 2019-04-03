@@ -94,6 +94,9 @@ class IVChemical(models.Model):
         self.save()
         cw[self.COPY_NAME][old_id] = self.id
 
+    def get_study(self):
+        return self.study
+
 
 class IVCellType(models.Model):
     objects = managers.IVCellTypeManager()
@@ -174,6 +177,8 @@ class IVCellType(models.Model):
         self.save()
         cw[self.COPY_NAME][old_id] = self.id
 
+    def get_study(self):
+        return self.study
 
 class IVExperiment(models.Model):
     objects = managers.IVExperimentManager()
@@ -274,6 +279,8 @@ class IVExperiment(models.Model):
         for child in children:
             child.copy_across_assessments(cw)
 
+    def get_study(self):
+        return self.study
 
 class IVEndpointCategory(AssessmentRootedTagTree):
     cache_template_taglist = 'invitro.ivendpointcategory.taglist.assessment-{0}'
