@@ -2,5 +2,6 @@
 .cache
 project/assets
 project/node_modules
+project/.happypack
 **/*.pyc
 **/*.DS_Store

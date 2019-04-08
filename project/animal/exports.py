@@ -212,8 +212,8 @@ class EndpointGroupFlatDataPivot(FlatFileExporter):
             'maximum endpoint change',
 
             'low_dose',
-            'NOAEL',
-            'LOAEL',
+            'NOEL',
+            'LOEL',
             'FEL',
             'high_dose',
 
@@ -386,8 +386,8 @@ class EndpointFlatDataPivot(EndpointGroupFlatDataPivot):
             'expected adversity direction',
 
             'low_dose',
-            'NOAEL',
-            'LOAEL',
+            'NOEL',
+            'LOEL',
             'FEL',
             'high_dose',
             'BMD',

@@ -856,11 +856,11 @@ class Endpoint(BaseEndpoint):
         verbose_name='Confidence interval (CI)',
         help_text='A 95% CI is written as 0.95.')
     NOEL = models.SmallIntegerField(
-        verbose_name="NOAEL",
+        verbose_name="NOEL",
         default=-999,
         help_text="No observed effect level")
     LOEL = models.SmallIntegerField(
-        verbose_name="LOAEL",
+        verbose_name="LOEL",
         default=-999,
         help_text="Lowest observed effect level")
     FEL = models.SmallIntegerField(

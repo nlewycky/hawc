@@ -22,8 +22,8 @@ class EndpointListTable {
                 'Animal group',
                 'Endpoint',
                 'Units',
-                'NOAEL',
-                'LOAEL',
+                'NOEL',
+                'LOEL',
                 'BMD',
                 'BMDLS',
             ];

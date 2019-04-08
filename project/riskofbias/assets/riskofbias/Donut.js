@@ -72,7 +72,7 @@ class Donut extends D3Plot {
         var domain_donut_data = [],
             question_donut_data = [];
 
-        this.study.riskofbias.forEach(function(v1) {
+        this.study.riskofbias.forEach(function(v1, idx) {
             domain_donut_data.push({
                 weight: 10, // equally weighted
                 score: v1.score,

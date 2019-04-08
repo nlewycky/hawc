@@ -394,8 +394,8 @@ class Endpoint extends Observee {
         }
 
         tbl
-            .add_tbody_tr('NOAEL', critical_dose('NOEL'))
-            .add_tbody_tr('LOAEL', critical_dose('LOEL'))
+            .add_tbody_tr('NOEL', critical_dose('NOEL'))
+            .add_tbody_tr('LOEL', critical_dose('LOEL'))
             .add_tbody_tr('FEL', critical_dose('FEL'))
             .add_tbody_tr('Benchmark dose modeling', bmd_response(null, true));
 
@@ -489,10 +489,10 @@ class Endpoint extends Observee {
             );
         }
         if (self.data.LOEL == endpoint_group_index) {
-            footnotes.push('LOAEL (Lowest Observed Adverse Effect Level)');
+            footnotes.push('LOEL (Lowest Observed Adverse Effect Level)');
         }
         if (self.data.NOEL == endpoint_group_index) {
-            footnotes.push('NOAEL (No Observed Adverse Effect Level)');
+            footnotes.push('NOEL (No Observed Adverse Effect Level)');
         }
         if (self.data.FEL == endpoint_group_index) {
             footnotes.push('FEL (Frank Effect Level)');

@@ -603,8 +603,8 @@ class EndpointFilterForm(forms.Form):
         ('system', 'system'),
         ('organ', 'organ'),
         ('effect', 'effect'),
-        ('-NOEL', 'NOAEL'),
-        ('-LOEL', 'LOAEL'),
+        ('-NOEL', 'NOEL'),
+        ('-LOEL', 'LOEL'),
         # BMD/BMDL is stored in output which is a JsonField on the bmd Model object. We want to sort on a sub-field of that.
         # when/if HAWC upgrades to Django 2.1 (see yekta's comment on https://stackoverflow.com/questions/36641759/django-1-9-jsonfield-order-by)
         # could possibly do something like this instead.
