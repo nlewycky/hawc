@@ -90,13 +90,21 @@ class RoBHeatmapPlot extends D3Visualization {
                     return _.includes(included_metrics, rob.data.metric.id);
                 })
                 .each(function(rob) {
+                    if (
+                        rob.data.metric.use_short_name === true &&
+                        rob.data.metric.short_name !== ''
+                    ) {
+                        // Check for short_name setting on the metric
+                        var metric_name = rob.data.metric.name;
+                        metric_name = rob.data.metric.short_name;
+                    }
                     dataset.push({
                         riskofbias: rob,
                         study: rob.study,
                         study_id: rob.study.id,
                         study_label: rob.study.data[study_label_field],
                         metric: rob.data.metric,
-                        metric_label: rob.data.metric.name,
+                        metric_label: metric_name,
                         score: rob.data.score,
                         score_text: rob.data.score_text,
                         score_color: rob.data.score_color,
@@ -227,7 +235,15 @@ class RoBHeatmapPlot extends D3Visualization {
             })
             .attr('height', width)
             .attr('width', width)
-            .attr('class', 'heatmap_selectable')
+            .attr('class', function(d) {
+                var returnValue = 'heatmap_selectable';
+
+                if (d.metric.domain.is_overall_confidence) {
+                    returnValue = 'heatmap_selectable_bold';
+                }
+
+                return returnValue;
+            })
             .style('fill', function(d) {
                 return d.score_color;
             })
@@ -261,7 +277,23 @@ class RoBHeatmapPlot extends D3Visualization {
             })
             .attr('text-anchor', 'middle')
             .attr('dy', '3.5px')
-            .attr('class', 'centeredLabel')
+            .attr('class', function(d) {
+                var returnValue = 'centeredLabel';
+
+                if (
+                    typeof self.data != 'undefined' &&
+                    typeof self.data.aggregation != 'undefined' &&
+                    typeof self.data.aggregation.metrics_dataset != 'undefined' &&
+                    d < self.data.aggregation.metrics_dataset.length &&
+                    typeof self.data.aggregation.metrics_dataset[d].domain_is_overall_confidence ==
+                        'boolean' &&
+                    self.data.aggregation.metrics_dataset[d].domain_is_overall_confidence
+                ) {
+                    var returnValue = 'heatmap_selectable_bold';
+                }
+
+                return returnValue;
+            })
             .style('fill', function(d) {
                 return d.score_text_color;
             })
