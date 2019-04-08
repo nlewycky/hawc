@@ -90,14 +90,10 @@ class RoBHeatmapPlot extends D3Visualization {
                     return _.includes(included_metrics, rob.data.metric.id);
                 })
                 .each(function(rob) {
-                    if (
-                        rob.data.metric.use_short_name === true &&
-                        rob.data.metric.short_name !== ''
-                    ) {
-                        // Check for short_name setting on the metric
-                        var metric_name = rob.data.metric.name;
-                        metric_name = rob.data.metric.short_name;
-                    }
+                    var metric_name =
+                        rob.data.metric.use_short_name === true && rob.data.metric.short_name !== ''
+                            ? rob.data.metric.short_name
+                            : rob.data.metric.name;
                     dataset.push({
                         riskofbias: rob,
                         study: rob.study,
