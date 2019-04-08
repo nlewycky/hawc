@@ -17,7 +17,6 @@ project/static/css/hawc_d3_aggregated.css
 webpack-stats.json
 
 # folders
-.happypack/
 .idea/
 .ipynb_checkpoints/
 .vscode/
