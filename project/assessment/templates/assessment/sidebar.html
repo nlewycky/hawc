@@ -10,7 +10,7 @@
         <li><a href="{% url 'lit:overview' assessment.pk %}">Literature review</a></li>
     {% endif %}
 
-    {% if assessment.enable_project_management %}
+    {% if assessment.enable_project_management and request.user.is_authenticated %}
         <li><a href="{% url 'mgmt:assessment_dashboard' assessment.pk %}">Management dashboard</a></li>
     {% endif %}
 

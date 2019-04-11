@@ -2,8 +2,8 @@ import json
 import logging
 
 import django
-
 from django.apps import apps
+from django.conf import settings
 from django.db import models, IntegrityError, transaction, connection
 from django.db.models import URLField, Q
 from django.core.cache import cache
@@ -16,6 +16,7 @@ from treebeard.mp_tree import MP_Node
 from utils.helper import HAWCDjangoJSONEncoder
 
 from . import forms, validators
+from .flavors import help_text as help_text_flavors
 
 
 class BaseManager(models.Manager):
@@ -45,7 +46,12 @@ def get_crumbs(obj, parent=None):
     else:
         crumbs = parent.get_crumbs()
     if obj.id is not None:
-        crumbs.append((obj.__str__(),  obj.get_absolute_url()))
+        icon = None
+        icon_fetch_method = getattr(obj, 'get_crumbs_icon', None)
+        if callable(icon_fetch_method):
+            icon = icon_fetch_method()
+
+        crumbs.append((obj.__str__(),  obj.get_absolute_url(), icon))
     else:
         crumbs.append((obj._meta.verbose_name.lower(), ))
     return crumbs
@@ -303,3 +309,23 @@ def get_distinct_charfield(Cls, assessment_id, field):
 def get_distinct_charfield_opts(Cls, assessment_id, field):
     objs = get_distinct_charfield(Cls, assessment_id, field)
     return [(obj, obj) for obj in sorted(objs)]
+
+
+def apply_flavored_help_text(app_name: str):
+    """
+    Apply custom help-text for specific application flavors; application-specific flavor help text
+    are un-tracked migration files.
+
+    Args:
+        app_name (str): The application short name
+    """
+    texts = getattr(help_text_flavors, settings.HAWC_FLAVOR, None)
+    if texts is None:
+        return
+
+    app_config = apps.get_app_config(app_name)
+    app_texts = texts.get(app_name)
+    for model_name, help_texts in app_texts.items():
+        model = app_config.get_model(model_name)
+        for field_name, help_text in help_texts.items():
+            model._meta.get_field(field_name).help_text = help_text

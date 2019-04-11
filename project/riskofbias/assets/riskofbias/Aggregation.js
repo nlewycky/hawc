@@ -72,6 +72,10 @@ class Aggregation {
             v.rename_property('key', 'domain');
             v.rename_property('values', 'rob_scores');
             v.domain_text = v.rob_scores[0].data.metric.domain.name;
+            v.domain_is_overall_confidence =
+                typeof v.rob_scores[0].data.metric.domain.is_overall_confidence === 'boolean'
+                    ? v.rob_scores[0].data.metric.domain.is_overall_confidence
+                    : false;
             var possible_score = d3.sum(
                     v.rob_scores.map(function(v) {
                         return v.data.score > 0 ? 4 : 0;

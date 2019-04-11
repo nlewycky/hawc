@@ -28,7 +28,13 @@ class RiskOfBiasDomain(models.Model):
         related_name='rob_domains')
     name = models.CharField(
         max_length=128)
-    description = models.TextField()
+    description = models.TextField(
+        blank=True)
+    is_overall_confidence = models.BooleanField(
+        default = False,
+        verbose_name = "Overall confidence?",
+        help_text = "Is this domain for overall confidence?"
+    )
     created = models.DateTimeField(
         auto_now_add=True)
     last_updated = models.DateTimeField(
@@ -144,6 +150,9 @@ class RiskOfBiasMetric(models.Model):
         related_name='metrics')
     name = models.CharField(
         max_length=256)
+    short_name = models.CharField(
+        max_length=50,
+        blank=True)
     description = models.TextField(
         blank=True,
         help_text='HTML text describing scoring of this field.')
@@ -155,6 +164,18 @@ class RiskOfBiasMetric(models.Model):
         default=True,
         verbose_name='Required for epidemiology?',
         help_text='Is this metric required for human epidemiological studies?<br/><b>CAUTION:</b> Removing requirement will destroy all epi responses previously entered for this metric.')
+    required_invitro = models.BooleanField(
+        default=True,
+        verbose_name='Required for in-vitro?',
+        help_text='Is this metric required for in-vitro studies?<br/><b>CAUTION:</b> Removing requirement will destroy all in-vitro responses previously entered for this metric.')
+    hide_description = models.BooleanField(
+        default=False,
+        verbose_name='Hide description?',
+        help_text='Hide the description on reports?')
+    use_short_name = models.BooleanField(
+        default=False,
+        verbose_name='Use the short name?',
+        help_text='Use the short name in visualizations?')
     created = models.DateTimeField(
         auto_now_add=True)
     last_updated = models.DateTimeField(
