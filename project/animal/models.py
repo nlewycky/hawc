@@ -489,7 +489,6 @@ class DosingRegime(models.Model):
         ("UN", "Untreated"),
         ("VT", "Vehicle-treated"),
         ("B" , "Untreated + Vehicle-treated"),
-        ("Y" , "Yes (untreated and/or vehicle)"),
         ("N" , "No"))
 
     TEXT_CLEANUP_FIELDS = (
@@ -728,13 +727,11 @@ class Endpoint(BaseEndpoint):
         (8, "--"),
         (0, "N/A, single dose level study"),
         (1, "N/A, no effects detected"),
-        (2, "yes, visual appearance of monotonicity but no trend"),
-        (3, "yes, monotonic and significant trend"),
-        (4, "yes, visual appearance of non-monotonic but no trend"),
-        (5, "yes, non-monotonic and significant trend"),
-        (6, "no pattern"),
-        (7, "unclear"),
-        (8, "not-reported"))
+        (2, "visual appearance of monotonicity"),
+        (3, "monotonic and significant trend"),
+        (4, "visual appearance of non-monotonicity"),
+        (6, "no pattern/unclear"),
+    )
 
     VARIANCE_TYPE_CHOICES = (
         (0, "NA"),
@@ -770,7 +767,7 @@ class Endpoint(BaseEndpoint):
         (3, 'increase from reference/control group'),
         (2, 'decrease from reference/control group'),
         (1, 'any change from reference/control group'),
-        (0, 'not reported'),
+        (0, 'unclear'),
         (4, '---')
     )
 
