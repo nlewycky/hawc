@@ -308,7 +308,7 @@ class Donut extends D3Plot {
             .attr('y', this.h)
             .attr('text-anchor', 'end')
             .attr('class', 'dr_title')
-            .text('{0} risk of bias summary'.printf(this.study.data.short_citation));
+            .text(this.study.data.short_citation);
 
         setTimeout(function() {
             self.toggle_domain_width();

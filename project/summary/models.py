@@ -360,6 +360,10 @@ class Visual(models.Model):
 
         return json.dumps(data)
 
+    def get_rob_visual_type_display(self, value):
+        rob_name = self.assessment.get_rob_name_display().lower()
+        return value.replace('risk of bias', rob_name)
+
 
 class DataPivot(models.Model):
     objects = managers.DataPivotManager()

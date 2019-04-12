@@ -347,7 +347,7 @@ class Study(Reference):
             return self.riskofbiases.objects.none()
         except MultipleObjectsReturned:
             raise ValidationError(
-                'Multiple active final risk of bias reviews for "{}", '
+                'Multiple active final risk of bias/study evaluation reviews for "{}", '
                 'there should only be one per study.'.format(self))
 
     def get_active_robs(self, with_final=True):

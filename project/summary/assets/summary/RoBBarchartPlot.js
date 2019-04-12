@@ -8,7 +8,7 @@ import RoBLegend from './RoBLegend';
 
 class RoBBarchartPlot extends D3Visualization {
     constructor(parent, data, options) {
-        // stacked-bars of risk of bias information. Criteria are on the y-axis,
+        // stacked-bars of rob information. Criteria are on the y-axis,
         // and studies are on the x-axis
         super(...arguments);
         this.setDefaults();
@@ -18,8 +18,9 @@ class RoBBarchartPlot extends D3Visualization {
         this.plot_div = $div.html('');
         this.processData();
         if (this.dataset.length === 0) {
+            let robName = this.data.assessment_rob_name.toLowerCase();
             return this.plot_div.html(
-                '<p>Error: no studies with risk of bias selected. Please select at least one study with risk of bias.</p>'
+                `<p>Error: no studies with ${robName} selected. Please select at least one study with ${robName}.</p>`
             );
         }
         this.get_plot_sizes();

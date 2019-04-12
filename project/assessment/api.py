@@ -158,6 +158,12 @@ class DoseUnitsViewset(viewsets.ReadOnlyModelViewSet):
         return self.model.objects.all()
 
 
+class Assessment(AssessmentViewset):
+    model = models.Assessment
+    permission_classes = (AssessmentLevelPermissions, )
+    serializer_class = serializers.AssessmentSerializer
+
+
 class AssessmentEndpointList(AssessmentViewset):
     serializer_class = serializers.AssessmentEndpointSerializer
     assessment_filter_args = "id"

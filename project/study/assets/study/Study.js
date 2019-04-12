@@ -54,7 +54,7 @@ class Study {
     }
 
     unpack_riskofbias() {
-        // unpack risk of bias information and nest by domain
+        // unpack rob information and nest by domain
         var self = this,
             riskofbias = [];
 

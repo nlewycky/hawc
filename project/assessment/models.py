@@ -37,6 +37,8 @@ NOEL_NAME_CHOICES_NOAEL = 1
 
 ROB_NAME_CHOICES_ROB = 0
 ROB_NAME_CHOICES_SE = 1
+ROB_NAME_CHOICES_ROB_TEXT = "Risk of bias"
+ROB_NAME_CHOICES_SE_TEXT = "Study evaluation"
 
 
 class NoelNames(NamedTuple):
@@ -54,8 +56,8 @@ class Assessment(models.Model):
     )
 
     ROB_NAME_CHOICES = (
-        (ROB_NAME_CHOICES_ROB, "Risk of bias"),
-        (ROB_NAME_CHOICES_SE, "Study evaluation"),
+        (ROB_NAME_CHOICES_ROB, ROB_NAME_CHOICES_ROB_TEXT),
+        (ROB_NAME_CHOICES_SE, ROB_NAME_CHOICES_SE_TEXT),
     )
 
     def get_noel_name_default():
@@ -168,7 +170,7 @@ class Assessment(models.Model):
     rob_name = models.PositiveSmallIntegerField(
         default=get_rob_name_default,
         choices=ROB_NAME_CHOICES,
-        verbose_name="RoB/SE name",
+        verbose_name="Risk of bias/Study evaluation name",
         help_text="What term should be used to refer to risk of bias/study evaluation questions?"
     )
     created = models.DateTimeField(auto_now_add=True)

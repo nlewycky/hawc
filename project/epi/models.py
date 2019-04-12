@@ -372,7 +372,7 @@ class Outcome(BaseEndpoint):
 
     NAME_HELP_TEXT = "Use title style (capitalize all words). Ex. Hyperthyroidism " + HAWC_VIS_NOTE
 
-    TAGS_HELP_TEXT = "For now, tag overall study confidence from the Risk of Bias review in this field. Ex. high" + formatHelpTextNotes("To add a new tag, click the \"+\" button to the right.") + formatHelpTextNotes("Only create new tags when necessary")
+    TAGS_HELP_TEXT = "For now, tag overall study confidence from the risk of bias review in this field. Ex. high" + formatHelpTextNotes("To add a new tag, click the \"+\" button to the right.") + formatHelpTextNotes("Only create new tags when necessary")
 
     TEXT_CLEANUP_FIELDS = (
         'name',

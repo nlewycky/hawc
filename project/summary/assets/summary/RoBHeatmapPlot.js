@@ -13,7 +13,7 @@ import D3Visualization from './D3Visualization';
 
 class RoBHeatmapPlot extends D3Visualization {
     constructor(parent, data, options) {
-        // heatmap of risk of bias information. Criteria are on the y-axis,
+        // heatmap of rob information. Criteria are on the y-axis,
         // and studies are on the x-axis
         super(...arguments);
         this.setDefaults();
@@ -24,8 +24,9 @@ class RoBHeatmapPlot extends D3Visualization {
         this.plot_div = $div.html('');
         this.processData();
         if (this.dataset.length === 0) {
+            let robName = this.data.assessment_rob_name.toLowerCase();
             return this.plot_div.html(
-                '<p>Error: no studies with risk of bias selected. Please select at least one study with risk of bias.</p>'
+                `<p>Error: no studies with ${robName} selected. Please select at least one study with ${robName}.</p>`
             );
         }
         this.get_plot_sizes();
@@ -187,10 +188,11 @@ class RoBHeatmapPlot extends D3Visualization {
             y = this.y_scale,
             width = this.cell_size,
             half_width = width / 2,
+            robName = this.data.assessment_rob_name,
             showSQs = function(v) {
                 self.print_details(self.modal.getBody(), $(this).data('robs'));
                 self.modal
-                    .addHeader('<h4>Risk of bias details: {0}</h4>'.printf(this.textContent))
+                    .addHeader(`<h4>${robName}: ${this.textContent}</h4>`)
                     .addFooter('')
                     .show({ maxWidth: 900 });
             },
@@ -255,7 +257,7 @@ class RoBHeatmapPlot extends D3Visualization {
                     robs: [v],
                 });
                 self.modal
-                    .addHeader('<h4>Risk of bias details</h4>')
+                    .addHeader(`<h4>${robName}</h4>`)
                     .addFooter('')
                     .show({ maxWidth: 900 });
             });

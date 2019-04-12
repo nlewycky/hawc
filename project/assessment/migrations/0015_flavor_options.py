@@ -21,6 +21,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='assessment',
             name='rob_name',
-            field=models.PositiveSmallIntegerField(choices=[(0, 'Risk of bias'), (1, 'Study evaluation')], default=assessment.models.Assessment.get_rob_name_default, help_text='What term should be used to refer to risk of bias/study evaluation questions?', verbose_name='RoB/SE name'),
+            field=models.PositiveSmallIntegerField(choices=[(0, 'Risk of bias'), (1, 'Study evaluation')], default=assessment.models.Assessment.get_rob_name_default, help_text='What term should be used to refer to risk of bias/study evaluation questions?', verbose_name='Risk of bias/Study evaluation name'),
         ),
     ]
