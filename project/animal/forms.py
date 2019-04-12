@@ -379,6 +379,12 @@ class EndpointForm(ModelForm):
         self.fields['LOEL'].widget = forms.Select()
         self.fields['FEL'].widget = forms.Select()
 
+        noel_names = assessment.get_noel_names() if assessment else self.instance.get_noel_names()
+        self.fields['NOEL'].label = noel_names.noel
+        self.fields['NOEL'].help_text = noel_names.noel_help_text
+        self.fields['LOEL'].label = noel_names.loel
+        self.fields['LOEL'].help_text = noel_names.loel_help_text
+
         self.fields['system'].widget = selectable.AutoCompleteWidget(
             lookup_class=lookups.EndpointSystemLookup,
             allow_new=True)
@@ -594,7 +600,7 @@ class UploadFileForm(forms.Form):
 
 class EndpointFilterForm(forms.Form):
 
-    ORDER_BY_CHOICES = (
+    ORDER_BY_CHOICES = [
         ('animal_group__experiment__study__short_citation', 'study'),
         ('animal_group__experiment__name', 'experiment name'),
         ('animal_group__name', 'animal group'),
@@ -603,8 +609,8 @@ class EndpointFilterForm(forms.Form):
         ('system', 'system'),
         ('organ', 'organ'),
         ('effect', 'effect'),
-        ('-NOEL', 'NOEL'),
-        ('-LOEL', 'LOEL'),
+        ['-NOEL', '<NOEL-NAME>'],
+        ['-LOEL', '<LOEL-NAME>'],
         # BMD/BMDL is stored in output which is a JsonField on the bmd Model object. We want to sort on a sub-field of that.
         # when/if HAWC upgrades to Django 2.1 (see yekta's comment on https://stackoverflow.com/questions/36641759/django-1-9-jsonfield-order-by)
         # could possibly do something like this instead.
@@ -615,7 +621,7 @@ class EndpointFilterForm(forms.Form):
         ('customBMDLS', 'BMDLS'),
         ('effect_subtype', 'effect subtype'),
         ('animal_group__experiment__chemical', 'chemical'),
-    )
+    ]
 
     studies = selectable.AutoCompleteSelectMultipleField(
         label='Study reference',
@@ -723,12 +729,21 @@ class EndpointFilterForm(forms.Form):
         required=False)
 
     def __init__(self, *args, **kwargs):
-        assessment_id = kwargs.pop('assessment_id')
+        assessment = kwargs.pop('assessment')
         super().__init__(*args, **kwargs)
+        noel_names = assessment.get_noel_names()
+
         for field in self.fields:
             if field not in ('sex', 'data_extracted', 'dose_units', 'order_by', 'paginate_by'):
                 self.fields[field].widget.update_query_parameters(
-                    {'related': assessment_id})
+                    {'related': assessment.id})
+
+            if field == 'order_by':
+                for i, (k, v) in enumerate(self.fields[field].choices):
+                    if v == '<NOEL-NAME>':
+                        self.fields[field].choices[i][1] = noel_names.noel
+                    if v == '<LOEL-NAME>':
+                        self.fields[field].choices[i][1] = noel_names.loel
 
         self.helper = self.setHelper()
 

@@ -531,12 +531,12 @@ class OutcomeFilterForm(forms.Form):
         required=False)
 
     def __init__(self, *args, **kwargs):
-        assessment_id = kwargs.pop('assessment_id')
+        assessment = kwargs.pop('assessment')
         super().__init__(*args, **kwargs)
         for field in self.fields:
             if field not in ('design', 'diagnostic', 'order_by', 'paginate_by'):
                 self.fields[field].widget.update_query_parameters(
-                    {'related': assessment_id})
+                    {'related': assessment.id})
 
         self.helper = self.setHelper()
 

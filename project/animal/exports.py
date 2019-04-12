@@ -171,6 +171,7 @@ class EndpointGroupFlatDataPivot(FlatFileExporter):
     def _get_header_row(self):
         # move qs.distinct() call here so we can make qs annotations.
         self.queryset = self.queryset.distinct('pk')
+        noel_names = self.kwargs['assessment'].get_noel_names()
         return [
             'study id',
             'study name',
@@ -212,8 +213,8 @@ class EndpointGroupFlatDataPivot(FlatFileExporter):
             'maximum endpoint change',
 
             'low_dose',
-            'NOEL',
-            'LOEL',
+            noel_names.noel,
+            noel_names.loel,
             'FEL',
             'high_dose',
 
@@ -345,6 +346,7 @@ class EndpointGroupFlatDataPivot(FlatFileExporter):
 class EndpointFlatDataPivot(EndpointGroupFlatDataPivot):
 
     def _get_header_row(self):
+        noel_names = self.kwargs['assessment'].get_noel_names()
         header = [
             'study id',
             'study name',
@@ -386,8 +388,8 @@ class EndpointFlatDataPivot(EndpointGroupFlatDataPivot):
             'expected adversity direction',
 
             'low_dose',
-            'NOEL',
-            'LOEL',
+            noel_names.noel,
+            noel_names.loel,
             'FEL',
             'high_dose',
             'BMD',

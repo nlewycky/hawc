@@ -578,6 +578,7 @@ class DataPivotQuery(DataPivot):
 
             exporter = Exporter(
                 qs,
+                assessment=self.assessment,
                 export_format=format_,
                 filename='{}-animal-bioassay'.format(self.assessment),
                 preferred_units=self.preferred_units
@@ -586,6 +587,7 @@ class DataPivotQuery(DataPivot):
         elif self.evidence_type == EPI:
             exporter = OutcomeDataPivot(
                 qs,
+                assessment=self.assessment,
                 export_format=format_,
                 filename='{}-epi'.format(self.assessment)
             )
@@ -593,6 +595,7 @@ class DataPivotQuery(DataPivot):
         elif self.evidence_type == EPI_META:
             exporter = MetaResultFlatDataPivot(
                 qs,
+                assessment=self.assessment,
                 export_format=format_,
                 filename='{}-epi-meta-analysis'.format(self.assessment)
             )
@@ -608,6 +611,7 @@ class DataPivotQuery(DataPivot):
             # generate export
             exporter = Exporter(
                 qs,
+                assessment=self.assessment,
                 export_format=format_,
                 filename='{}-invitro'.format(self.assessment)
             )

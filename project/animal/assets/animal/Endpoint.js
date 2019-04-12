@@ -2,6 +2,7 @@ import $ from '$';
 import _ from 'lodash';
 import d3 from 'd3';
 
+import BaseTable from 'utils/BaseTable';
 import DescriptiveTable from 'utils/DescriptiveTable';
 import HAWCModal from 'utils/HAWCModal';
 import HAWCUtils from 'utils/HAWCUtils';
@@ -394,8 +395,8 @@ class Endpoint extends Observee {
         }
 
         tbl
-            .add_tbody_tr('NOEL', critical_dose('NOEL'))
-            .add_tbody_tr('LOEL', critical_dose('LOEL'))
+            .add_tbody_tr(this.data.noel_names.noel, critical_dose('NOEL'))
+            .add_tbody_tr(this.data.noel_names.loel, critical_dose('LOEL'))
             .add_tbody_tr('FEL', critical_dose('FEL'))
             .add_tbody_tr('Benchmark dose modeling', bmd_response(null, true));
 
@@ -488,11 +489,11 @@ class Endpoint extends Observee {
                 )
             );
         }
-        if (self.data.LOEL == endpoint_group_index) {
-            footnotes.push('LOEL (Lowest Observed Adverse Effect Level)');
-        }
         if (self.data.NOEL == endpoint_group_index) {
-            footnotes.push('NOEL (No Observed Adverse Effect Level)');
+            footnotes.push(`${this.data.noel_names.noel} (${this.data.noel_names.noel_help_text})`);
+        }
+        if (self.data.LOEL == endpoint_group_index) {
+            footnotes.push(`${this.data.noel_names.loel} (${this.data.noel_names.loel_help_text})`);
         }
         if (self.data.FEL == endpoint_group_index) {
             footnotes.push('FEL (Frank Effect Level)');

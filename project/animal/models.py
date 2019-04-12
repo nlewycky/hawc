@@ -1213,6 +1213,9 @@ class Endpoint(BaseEndpoint):
         if self.animal_group is not None:
             return self.animal_group.get_study()
 
+    def get_noel_names(self):
+        return self.assessment.get_noel_names()
+
 
 class ConfidenceIntervalsMixin(object):
     """

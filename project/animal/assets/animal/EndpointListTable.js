@@ -22,8 +22,8 @@ class EndpointListTable {
                 'Animal group',
                 'Endpoint',
                 'Units',
-                'NOEL',
-                'LOEL',
+                this.endpoints[0].data.noel_names.noel,
+                this.endpoints[0].data.noel_names.loel,
                 'BMD',
                 'BMDLS',
             ];
@@ -37,6 +37,10 @@ class EndpointListTable {
                 'dose units': 'units',
             }
         );
+        headersToSortKeys.noael = 'NOEL';
+        headersToSortKeys.noel = 'NOEL';
+        headersToSortKeys.loael = 'LOEL';
+        headersToSortKeys.loel = 'LOEL';
 
         tbl.enableSortableHeaderLinks($('#initial_order_by').val(), headersToSortKeys);
 

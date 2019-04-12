@@ -598,11 +598,11 @@ class BaseEndpointFilterList(BaseList):
         if len(self.request.GET) > 0:
             self.form = self.form_class(
                 self.request.GET,
-                assessment_id=self.assessment.id
+                assessment=self.assessment
             )
         else:
             self.form = self.form_class(
-                assessment_id=self.assessment.id
+                assessment=self.assessment
             )
         return super().get(request, *args, **kwargs)
 
