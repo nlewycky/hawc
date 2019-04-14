@@ -8,6 +8,7 @@ import HAWCUtils from 'utils/HAWCUtils';
 
 import RiskOfBiasScore from 'riskofbias/RiskOfBiasScore';
 import { renderStudyDisplay } from 'riskofbias/robTable/components/StudyDisplay';
+import { SCORE_SHADES, SCORE_TEXT } from 'riskofbias/constants';
 
 class Study {
     constructor(data) {
@@ -56,13 +57,14 @@ class Study {
     unpack_riskofbias() {
         // unpack rob information and nest by domain
         var self = this,
-            riskofbias = [];
+            riskofbias = [],
+            rob_response_values = this.data.rob_response_values;
 
         this.final.scores.forEach(function(v, i) {
-            v.score_color = RiskOfBiasScore.score_shades[v.score];
+            v.score_color = SCORE_SHADES[v.score];
             v.score_text_color = String.contrasting_color(v.score_color);
-            v.score_text = RiskOfBiasScore.score_text[v.score];
-            riskofbias.push(new RiskOfBiasScore(self, v));
+            v.score_text = SCORE_TEXT[v.score];
+            riskofbias.push(new RiskOfBiasScore(self, v, rob_response_values));
         });
 
         // group rob by domains

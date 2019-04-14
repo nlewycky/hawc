@@ -1,10 +1,9 @@
 import _ from 'lodash';
 import d3 from 'd3';
 
-import RiskOfBiasScore from 'riskofbias/RiskOfBiasScore';
-
 import D3Visualization from './D3Visualization';
 import RoBLegend from './RoBLegend';
+import { SCORE_SHADES } from 'riskofbias/constants';
 
 class RoBBarchartPlot extends D3Visualization {
     constructor(parent, data, options) {
@@ -78,7 +77,7 @@ class RoBBarchartPlot extends D3Visualization {
                 axis_labels: true,
                 label_format: undefined,
             },
-            color_scale: d3.scale.ordinal().range(_.values(RiskOfBiasScore.score_shades)),
+            color_scale: d3.scale.ordinal().range(_.values(SCORE_SHADES)),
         });
     }
 
@@ -272,11 +271,12 @@ class RoBBarchartPlot extends D3Visualization {
 
     build_legend() {
         if (this.legend || !this.data.settings.show_legend) return;
-        let options = {
-            dev: this.options.dev || false,
-            collapseNR: true,
-        };
-        this.legend = new RoBLegend(this.svg, this.data.settings, options);
+        let rob_response_values = this.data.aggregation.studies[0].data.rob_response_values,
+            options = {
+                dev: this.options.dev || false,
+                collapseNR: true,
+            };
+        this.legend = new RoBLegend(this.svg, this.data.settings, rob_response_values, options);
     }
 }
 

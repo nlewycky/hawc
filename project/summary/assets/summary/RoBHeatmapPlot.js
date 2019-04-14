@@ -441,11 +441,12 @@ class RoBHeatmapPlot extends D3Visualization {
 
     build_legend() {
         if (this.legend || !this.data.settings.show_legend) return;
-        let options = {
-            dev: this.options.dev || false,
-            collapseNR: false,
-        };
-        this.legend = new RoBLegend(this.svg, this.data.settings, options);
+        let rob_response_values = this.data.aggregation.studies[0].data.rob_response_values,
+            options = {
+                dev: this.options.dev || false,
+                collapseNR: false,
+            };
+        this.legend = new RoBLegend(this.svg, this.data.settings, rob_response_values, options);
     }
 
     print_details($div, d) {
