@@ -67,7 +67,7 @@ class ScoreForm extends Component {
 
     render() {
         let { name } = this.props.score.metric,
-            { score, notes, selectedSymbol, selectedShade } = this.state,
+            { score, notes } = this.state,
             choices = this.props.robResponseValues.map((d) => {
                 return { id: parseInt(d), value: SCORE_TEXT_DESCRIPTION[d] };
             });
@@ -81,7 +81,7 @@ class ScoreForm extends Component {
                         value={score}
                         handleSelect={this.selectScore}
                     />
-                    <ScoreIcon shade={selectedShade} symbol={selectedSymbol} />
+                    <ScoreIcon score={score} />
                 </div>
                 <ReactQuill
                     id={name}
