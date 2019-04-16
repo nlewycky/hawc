@@ -406,6 +406,8 @@ class RiskOfBiasScore(models.Model):
         (27, 'Good'),
     )
 
+    RISK_OF_BIAS_SCORE_CHOICES_MAP = {k: v for k, v in RISK_OF_BIAS_SCORE_CHOICES}
+
     SCORE_SYMBOLS = {
         1: 'N/A',
         2: 'NR',

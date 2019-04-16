@@ -48,17 +48,9 @@ def get_treatment_period(exp, dr):
 
 
 def get_final_rob_text(study_id):
-    # TODO - revisit after migration to not query db here
-    fROB = Study.objects.get(pk=study_id).get_overall_confidence()
-    if fROB == -1:
-        finalROB = 'N/A'
-    else:
-        # TODO - make changes?
-        fROB = (fROB+10)%11
-        for cnt, text in RiskOfBiasScore.RISK_OF_BIAS_SCORE_CHOICES:
-            if cnt == fROB:
-                finalROB = text
-    return finalROB
+    rob_score = Study.objects.get(pk=study_id).get_overall_confidence()
+    text = RiskOfBiasScore.RISK_OF_BIAS_SCORE_CHOICES_MAP.get(rob_score, "N/A")
+    return text
 
 
 class EndpointGroupFlatComplete(FlatFileExporter):

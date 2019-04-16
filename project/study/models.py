@@ -363,7 +363,7 @@ class Study(Reference):
                .prefetch_related('author')
 
     def get_overall_confidence(self):
-        # TODO - move to riskofbias?
+        # returns the overall RoB confidence score for a study, or -1 if none exists
         final_confidence_set = self.riskofbiases\
                 .prefetch_related('scores__metric__domain')\
                 .filter(active=True, final=True, scores__metric__domain__is_overall_confidence=True)
@@ -372,8 +372,7 @@ class Study(Reference):
             if final_confidence_set.count() != 1:
                 return -1
             else:
-                fc = final_confidence_set.values_list('scores__score', flat=True)[0]
-                return (fc+1)%11
+                return final_confidence_set.values_list('scores__score', flat=True)[0]
         else:
             return -1
 
