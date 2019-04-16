@@ -574,9 +574,9 @@ class RiskOfBiasAssessment(models.Model):
     def get_rob_response_values(self):
         # get valid RiskOfBiasScore response options given responses selection
         if self.responses == RESPONSES_OHAT:
-            return [1, 2, 14, 15, 16, 17]
+            return [1, 14, 15, 16, 17, 2]
         elif self.responses == RESPONSES_EPA:
-            return [1, 2, 24, 25, 26, 27]
+            return [1, 24, 25, 26, 27, 2]
         else:
             raise ValueError(f"Unknown responses: {self.responses}")
 
