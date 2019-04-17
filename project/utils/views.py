@@ -135,6 +135,7 @@ class AssessmentPermissionsMixin(object):
             if self.model == Assessment:
                 perms = self.assessment.user_can_edit_assessment(self.request.user)
             else:
+                self.deny_for_locked_study(self.request.user, self.assessment, obj)
                 perms = self.assessment.user_can_edit_object(self.request.user)
 
         logging.debug('Permissions checked')

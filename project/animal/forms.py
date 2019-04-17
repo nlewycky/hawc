@@ -2,6 +2,7 @@ from collections import Counter
 
 from django import forms
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.forms import ModelForm
 from django.forms.models import BaseModelFormSet, modelformset_factory
 from django.db.models import Q
@@ -14,6 +15,7 @@ from assessment.models import DoseUnits
 from assessment.lookups import EffectTagLookup, SpeciesLookup, StrainLookup
 from study.lookups import AnimalStudyLookup
 from utils.forms import BaseFormHelper, CopyAsNewSelectorForm
+from utils.models import get_flavored_text
 
 from . import models, lookups
 
@@ -352,7 +354,7 @@ class EndpointForm(ModelForm):
     effects = selectable.AutoCompleteSelectMultipleField(
         lookup_class=EffectTagLookup,
         required=False,
-        help_text="Any additional descriptive-tags used to categorize the outcome",
+        help_text=get_flavored_text("ani__endpoint_form__effects"),
         label="Additional tags"
     )
 
@@ -409,10 +411,7 @@ class EndpointForm(ModelForm):
             self.instance.animal_group = animal_group
             self.instance.assessment = assessment
 
-        self.fields["name"].help_text = """
-            Short-text used to describe the endpoint.
-            Should include observation-time,
-            if multiple endpoints have the same observation time."""
+        self.fields["name"].help_text = get_flavored_text("ani__endpoint_form__name")
 
         self.helper = self.setHelper()
 
@@ -426,10 +425,7 @@ class EndpointForm(ModelForm):
         else:
             inputs = {
                 "legend_text": "Create new endpoint",
-                "help_text":   """
-                    Create a new endpoint. An endpoint may should describe one
-                    measure-of-effect which was measured in the study. It may
-                    or may not contain quantitative data.""",
+                "help_text": get_flavored_text("ani__endpoint_form__create"),
                 "cancel_url": self.instance.animal_group.get_absolute_url()
             }
 

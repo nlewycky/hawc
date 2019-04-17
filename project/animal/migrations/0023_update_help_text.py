@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='experiment',
             name='cas',
-            field=models.CharField(blank=True, help_text='\n                CAS number for chemical-tested. Use N/A if not applicable. If more than one\n                in the comment field below.\n                ', max_length=40, verbose_name='Chemical identifier (CAS)'),
+            field=models.CharField(blank=True, help_text='\n                CAS number for chemical-tested. Use N/A if not applicable. If more than one\n                CAS number is applicable, then use a common one here and indicate others\n                in the comment field below.\n                ', max_length=40, verbose_name='Chemical identifier (CAS)'),
         ),
         migrations.AlterField(
             model_name='experiment',

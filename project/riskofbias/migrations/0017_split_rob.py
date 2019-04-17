@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='riskofbiasassessment',
             name='default_questions',
-            field=models.PositiveSmallIntegerField(choices=[(0, 'No defaults'), (1, 'OHAT'), (2, 'EPA')], default=0, help_text='If no questions exist, which default questions should be used? If questions already exist, changing this will have no impact.', verbose_name='Default questions'),
+            field=models.PositiveSmallIntegerField(choices=[(1, 'OHAT'), (2, 'EPA')], default=riskofbias.models.RiskOfBiasAssessment.get_default_default_questions, help_text='If no questions exist, which default questions should be used? If questions already exist, changing this will have no impact.', verbose_name='Default questions'),
         ),
         migrations.AddField(
             model_name='riskofbiasassessment',

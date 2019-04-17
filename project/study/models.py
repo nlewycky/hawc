@@ -29,8 +29,11 @@ class Study(Reference):
         (4, '---'),
         (0, 'Authors report they have no COI'),
         (1, 'Authors disclosed COI'),
+        (5, 'Not reported; no COI is inferred based on author affiliation and/or funding source'),
+        (6, 'Not reported; a COI is inferred based on author affiliation and/or funding source'),
+        (3, 'Not reported'),
         (2, 'Unknown'),
-        (3, 'Not reported'))
+    )
 
     TEXT_CLEANUP_FIELDS = (
         'short_citation',

@@ -80,6 +80,7 @@ class Experiment(models.Model):
         verbose_name="Chemical identifier (CAS)",
         help_text="""
                 CAS number for chemical-tested. Use N/A if not applicable. If more than one
+                CAS number is applicable, then use a common one here and indicate others
                 in the comment field below.
                 """)
     chemical_source = models.CharField(

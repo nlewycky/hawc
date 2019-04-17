@@ -15,7 +15,7 @@ from assessment.models import Assessment
 from myuser.models import HAWCUser
 from study.models import Study
 from utils.helper import cleanHTML, HAWCDjangoJSONEncoder, SerializerHelper
-from utils.models import get_crumbs
+from utils.models import get_crumbs, get_flavored_text
 
 from . import managers
 
@@ -547,10 +547,7 @@ class RiskOfBiasAssessment(models.Model):
     number_of_reviewers = models.PositiveSmallIntegerField(
         default=1)
     help_text = models.TextField(
-        default="<p>When a study is entered into the HAWC database for use in an assessment, "
-            "risk of bias metrics can be entered for a metric of bias for each study. "
-            "Risk of Bias metrics are organized by domain. The following questions are "
-            "required for evaluation for this assessment.</p>",
+        default="Instructions for reviewers completing assessments",
         help_text="Detailed instructions for completing risk of bias assessments."
     )
     default_questions = models.PositiveSmallIntegerField(
@@ -571,7 +568,10 @@ class RiskOfBiasAssessment(models.Model):
 
     @classmethod
     def build_default(cls, assessment):
-        RiskOfBiasAssessment.objects.create(assessment=assessment)
+        RiskOfBiasAssessment.objects.create(
+            assessment=assessment,
+            help_text=get_flavored_text("riskofbias__riskofbiasassessment_help_text_default")
+        )
 
     def get_rob_response_values(self):
         # get valid RiskOfBiasScore response options given responses selection

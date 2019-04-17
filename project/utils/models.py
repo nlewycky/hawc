@@ -17,6 +17,7 @@ from utils.helper import HAWCDjangoJSONEncoder
 
 from . import forms, validators
 from .flavors import help_text as help_text_flavors
+from .flavors.text import text_mapping
 
 
 class BaseManager(models.Manager):
@@ -319,6 +320,9 @@ def apply_flavored_help_text(app_name: str):
     Args:
         app_name (str): The application short name
     """
+    if not settings.MODIFY_HELP_TEXT:
+        return
+
     texts = getattr(help_text_flavors, settings.HAWC_FLAVOR, None)
     if texts is None:
         return
@@ -329,3 +333,12 @@ def apply_flavored_help_text(app_name: str):
         model = app_config.get_model(model_name)
         for field_name, help_text in help_texts.items():
             model._meta.get_field(field_name).help_text = help_text
+
+
+def get_flavored_text(key: str) -> str:
+    """
+    Get flavored text for cases where text should differ depending on environment. This doesn't
+    update the django models but is used in other situations where text is needed.
+    """
+    flavor = settings.HAWC_FLAVOR.lower()
+    return getattr(text_mapping[key], flavor)
