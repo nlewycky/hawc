@@ -9,6 +9,7 @@ from django.core.cache import cache
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import HttpResponse
 from django.utils import html
+from django.utils.encoding import force_text
 
 from rest_framework.renderers import JSONRenderer
 
@@ -35,7 +36,7 @@ def cleanHTML(txt):
 def strip_entities(value):
     """Return the given HTML with all entities (&something;) stripped."""
     # Note: Originally in Django but removed in v1.10
-    return re.sub(r'&(?:\w+|#\d+);', '', html.force_text(value))
+    return re.sub(r'&(?:\w+|#\d+);', '', force_text(value))
 
 
 def strip_tags(value):
@@ -122,7 +123,7 @@ class SerializerHelper(object):
         if hasattr(obj, 'optimized_for_serialization'):
             obj = obj.optimized_for_serialization()
         serialized = cls._serialize(obj, json=False)
-        json_str = JSONRenderer().render(serialized)
+        json_str = JSONRenderer().render(serialized).decode('utf-8')
         serialized = OrderedDict(serialized)  # for pickling
 
         logging.debug('setting cache: {}'.format(name))

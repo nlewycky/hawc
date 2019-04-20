@@ -8,7 +8,7 @@ from django.db import models, transaction
 from django.apps import apps
 from django.core.exceptions import (ValidationError, ObjectDoesNotExist,
                                     MultipleObjectsReturned)
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import Http404
 
 from reversion import revisions as reversion
@@ -395,7 +395,7 @@ class Study(Reference):
         # TODO - remove, or user super()? this is almost already implemented with standard methods?
         if user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return (self.editable and
@@ -405,7 +405,8 @@ class Study(Reference):
 class Attachment(models.Model):
     objects = managers.AttachmentManager()
 
-    study = models.ForeignKey(Study, related_name="attachments")
+    study = models.ForeignKey(Study, related_name="attachments",
+        on_delete=models.CASCADE)
     attachment = models.FileField(upload_to="study-attachment")
 
     def __str__(self):

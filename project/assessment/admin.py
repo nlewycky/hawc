@@ -1,5 +1,6 @@
 from django.db.models import TextField
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 
 from . import models
 
@@ -26,7 +27,7 @@ class AssessmentAdmin(admin.ModelAdmin):
             ul.append("<li>{} {}</li>".format(user.first_name, user.last_name))
 
         ul.append("</ul>")
-        return " ".join(ul)
+        return mark_safe(" ".join(ul))
 
     def get_managers(self, obj):
         return self.get_staff_ul(obj.project_manager)

@@ -5,7 +5,7 @@ import json
 import math
 
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -57,7 +57,8 @@ class Experiment(models.Model):
 
     study = models.ForeignKey(
         'study.Study',
-        related_name='experiments')
+        related_name='experiments',
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=80,
         help_text = "Short-text used to describe the experiment "
@@ -262,7 +263,8 @@ class AnimalGroup(models.Model):
 
     experiment = models.ForeignKey(
         Experiment,
-        related_name="animal_groups")
+        related_name="animal_groups",
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=80,
         help_text="""
@@ -272,11 +274,13 @@ class AnimalGroup(models.Model):
             sex in title (e.g., F1 Male Sprague Dawley Rat or P0 Female C57 Mice)
             """)
     species = models.ForeignKey(
-        'assessment.Species')
+        'assessment.Species',
+        on_delete=models.CASCADE)
     strain = models.ForeignKey(
         'assessment.Strain',
         help_text='When adding a new strain, put the stock in parenthesis, e.g., ' +
-                    '\"Sprague-Dawley (Harlan).\"')
+                    '\"Sprague-Dawley (Harlan).\"',
+        on_delete=models.CASCADE)
     sex = models.CharField(
         max_length=1,
         choices=SEX_CHOICES)
@@ -326,7 +330,8 @@ class AnimalGroup(models.Model):
         'DosingRegime',
         help_text='Specify an existing dosing regime or create a new dosing regime below',
         blank=True,
-        null=True)  # not enforced in db, but enforced in views
+        null=True,
+        on_delete=models.CASCADE)  # not enforced in db, but enforced in views
     comments = models.TextField(
         blank=True,
         verbose_name="Animal Source and Husbandry",
@@ -501,7 +506,8 @@ class DosingRegime(models.Model):
         AnimalGroup,
         related_name='dosed_animals',
         blank=True,
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     route_of_exposure = models.CharField(
         max_length=2,
         choices=ROUTE_EXPOSURE_CHOICES,
@@ -654,9 +660,11 @@ class DoseGroup(models.Model):
 
     dose_regime = models.ForeignKey(
         DosingRegime,
-        related_name='doses')
+        related_name='doses',
+        on_delete=models.CASCADE)
     dose_units = models.ForeignKey(
-        'assessment.DoseUnits')
+        'assessment.DoseUnits',
+        on_delete=models.CASCADE)
     dose_group_id = models.PositiveSmallIntegerField()
     dose = models.FloatField(
         validators=[MinValueValidator(0)])
@@ -782,7 +790,8 @@ class Endpoint(BaseEndpoint):
 
     animal_group = models.ForeignKey(
         AnimalGroup,
-        related_name="endpoints")
+        related_name="endpoints",
+        on_delete=models.CASCADE)
     system = models.CharField(
         max_length=128,
         blank=True,
@@ -1391,7 +1400,8 @@ class EndpointGroup(ConfidenceIntervalsMixin, models.Model):
 
     endpoint = models.ForeignKey(
         Endpoint,
-        related_name='groups')
+        related_name='groups',
+        on_delete=models.CASCADE)
     dose_group_id = models.IntegerField()
     n = models.PositiveSmallIntegerField(
         blank=True,

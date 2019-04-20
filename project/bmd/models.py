@@ -6,7 +6,7 @@ import os
 from django.db import models
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.timezone import now
 
 from utils.models import get_crumbs
@@ -29,7 +29,8 @@ class AssessmentSettings(models.Model):
 
     assessment = models.OneToOneField(
         'assessment.Assessment',
-        related_name='bmd_settings')
+        related_name='bmd_settings',
+        on_delete=models.CASCADE)
     version = models.CharField(
         max_length=10,
         choices=BMDS_CHOICES,
@@ -69,7 +70,8 @@ class LogicField(models.Model):
     assessment = models.ForeignKey(
         'assessment.Assessment',
         related_name='bmd_logic_fields',
-        editable=False)
+        editable=False,
+        on_delete=models.CASCADE)
     created = models.DateTimeField(
         auto_now_add=True)
     last_updated = models.DateTimeField(
@@ -138,10 +140,12 @@ class Session(models.Model):
 
     endpoint = models.ForeignKey(
         'animal.Endpoint',
-        related_name='bmd_sessions')
+        related_name='bmd_sessions',
+        on_delete=models.CASCADE)
     dose_units = models.ForeignKey(
         'assessment.DoseUnits',
-        related_name='bmd_sessions')
+        related_name='bmd_sessions',
+        on_delete=models.CASCADE)
     version = models.CharField(
         max_length=10,
         choices=BMDS_CHOICES)
@@ -322,7 +326,8 @@ class Model(models.Model):
 
     session = models.ForeignKey(
         Session,
-        related_name='models')
+        related_name='models',
+        on_delete=models.CASCADE)
     model_id = models.PositiveSmallIntegerField()
     bmr_id = models.PositiveSmallIntegerField()
     name = models.CharField(
@@ -380,10 +385,12 @@ class SelectedModel(models.Model):
 
     endpoint = models.OneToOneField(
         'animal.Endpoint',
-        related_name='bmd_model')
+        related_name='bmd_model',
+        on_delete=models.CASCADE)
     model = models.ForeignKey(
         Model,
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     notes = models.TextField(
         blank=True)
     created = models.DateTimeField(

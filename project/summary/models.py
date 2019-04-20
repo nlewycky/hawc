@@ -5,7 +5,7 @@ import json
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.html import strip_tags
 
 from assessment.models import Assessment, BaseEndpoint, DoseUnits
@@ -45,7 +45,8 @@ STUDY_TYPE_CHOICES = (
 class SummaryText(MP_Node):
     objects = managers.SummaryTextManager()
 
-    assessment = models.ForeignKey(Assessment)
+    assessment = models.ForeignKey(Assessment,
+        on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     slug = models.SlugField(verbose_name="URL Name",
                             help_text="The URL (web address) used on the website to describe this object (no spaces or special-characters).",
@@ -194,13 +195,15 @@ class Visual(models.Model):
                   "(no spaces or special-characters).")
     assessment = models.ForeignKey(
         Assessment,
-        related_name='visuals')
+        related_name='visuals',
+        on_delete=models.CASCADE)
     visual_type = models.PositiveSmallIntegerField(
         choices=VISUAL_CHOICES)
     dose_units = models.ForeignKey(
         DoseUnits,
         blank=True,
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     prefilters = models.TextField(
         default="{}")
     endpoints = models.ManyToManyField(
@@ -369,7 +372,8 @@ class DataPivot(models.Model):
     objects = managers.DataPivotManager()
 
     assessment = models.ForeignKey(
-        Assessment)
+        Assessment,
+        on_delete=models.CASCADE)
     title = models.CharField(
         max_length=128,
         help_text="Enter the title of the visualization (spaces and special-characters allowed).")

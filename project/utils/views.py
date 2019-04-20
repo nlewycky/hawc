@@ -3,7 +3,7 @@ import logging
 
 from django.apps import apps
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.forms.models import model_to_dict
@@ -290,7 +290,7 @@ class CanCreateMixin(object):
         logging.debug('Permissions checked')
         if self.request.user.is_superuser:
             return True
-        elif self.request.user.is_anonymous():
+        elif self.request.user.is_anonymous:
             return False
         else:
             return ((assessment.editable is True) and

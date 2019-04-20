@@ -5,7 +5,7 @@ from typing import NamedTuple
 
 from django.db import models
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.validators import MinValueValidator
 from django.conf import settings
 from django.contrib.contenttypes import fields
@@ -213,7 +213,7 @@ class Assessment(models.Model):
         """
         if self.public or user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return ((user in self.project_manager.all()) or
@@ -227,7 +227,7 @@ class Assessment(models.Model):
         """
         if user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return (self.editable and
@@ -241,7 +241,7 @@ class Assessment(models.Model):
         """
         if user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return (user in self.project_manager.all())
@@ -253,7 +253,7 @@ class Assessment(models.Model):
         """
         if user.is_superuser:
             return True
-        elif user.is_anonymous():
+        elif user.is_anonymous:
             return False
         else:
             return ((user in self.project_manager.all()) or
@@ -275,7 +275,8 @@ class Assessment(models.Model):
 class Attachment(models.Model):
     objects = managers.AttachmentManager()
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType,
+        on_delete=models.PROTECT)
     object_id = models.PositiveIntegerField()
     content_object = fields.GenericForeignKey('content_type', 'object_id')
     title = models.CharField(max_length=128)
@@ -363,7 +364,8 @@ class Strain(models.Model):
     objects = managers.StrainManager()
 
     species = models.ForeignKey(
-        Species)
+        Species,
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=30)
     created = models.DateTimeField(
@@ -416,7 +418,8 @@ class BaseEndpoint(models.Model):
     """
     objects = managers.BaseEndpointManager()
 
-    assessment = models.ForeignKey(Assessment, db_index=True)
+    assessment = models.ForeignKey(Assessment, db_index=True,
+        on_delete=models.PROTECT)
     # Some denormalization but required for efficient capture of all endpoints
     # in assessment; major use case in HAWC.
 
@@ -454,7 +457,7 @@ class TimeSpentEditing(models.Model):
     assessment = models.ForeignKey(
         Assessment, on_delete=models.CASCADE)
     content_type = models.ForeignKey(
-        ContentType, on_delete=models.CASCADE)
+        ContentType, on_delete=models.PROTECT)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey(
         'content_type', 'object_id')

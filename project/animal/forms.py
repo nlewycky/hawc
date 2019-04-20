@@ -1,7 +1,7 @@
 from collections import Counter
 
 from django import forms
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 from django.forms import ModelForm
 from django.forms.models import BaseModelFormSet, modelformset_factory

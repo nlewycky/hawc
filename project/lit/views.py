@@ -2,7 +2,7 @@ import json
 
 from datetime import datetime
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import get_object_or_404

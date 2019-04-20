@@ -11,7 +11,7 @@ INSTALLED_APPS += (
     'django_extensions',
 )
 
-MIDDLEWARE_CLASSES += (
+MIDDLEWARE += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 

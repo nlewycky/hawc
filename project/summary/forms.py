@@ -4,7 +4,7 @@ import json
 from crispy_forms import layout as cfl
 from django import forms
 from django.db.models import QuerySet
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 import pandas as pd
 from selectable import forms as selectable
 from xlrd import XLRDError, open_workbook

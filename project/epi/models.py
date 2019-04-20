@@ -6,7 +6,7 @@ import math
 from operator import xor
 
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from reversion import revisions as reversion
@@ -32,7 +32,8 @@ class Criteria(models.Model):
     objects = managers.CriteriaManager()
 
     assessment = models.ForeignKey(
-        'assessment.Assessment')
+        'assessment.Assessment',
+        on_delete=models.CASCADE)
     description = models.TextField()
     created = models.DateTimeField(
         auto_now_add=True)
@@ -78,7 +79,8 @@ class AdjustmentFactor(models.Model):
     objects = managers.AdjustmentFactorManager()
 
     assessment = models.ForeignKey(
-        'assessment.Assessment')
+        'assessment.Assessment',
+        on_delete=models.CASCADE)
     description = models.TextField()
     created = models.DateTimeField(
         auto_now_add=True)
@@ -129,10 +131,12 @@ class StudyPopulationCriteria(models.Model):
     )
     criteria = models.ForeignKey(
         'Criteria',
-        related_name='spcriteria')
+        related_name='spcriteria',
+        on_delete=models.CASCADE)
     study_population = models.ForeignKey(
         'StudyPopulation',
-        related_name='spcriteria')
+        related_name='spcriteria',
+        on_delete=models.CASCADE)
     criteria_type = models.CharField(
         max_length=1,
         choices=CRITERIA_TYPE)
@@ -182,7 +186,8 @@ class StudyPopulation(models.Model):
 
     study = models.ForeignKey(
         'study.Study',
-        related_name="study_populations")
+        related_name="study_populations",
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=256,
         help_text="Name the population associated with the study, following the format <b>Study name (years study conducted), Country, number participants " +
@@ -214,7 +219,8 @@ class StudyPopulation(models.Model):
         blank=True,
         help_text="Population source (General population, Occupational cohort, Superfund site, etc.). Ex. General population")
     country = models.ForeignKey(
-        Country)
+        Country,
+        on_delete=models.CASCADE)
     region = models.CharField(
         max_length=128,
         blank=True,
@@ -394,7 +400,8 @@ class Outcome(BaseEndpoint):
 
     study_population = models.ForeignKey(
         StudyPopulation,
-        related_name='outcomes')
+        related_name='outcomes',
+        on_delete=models.CASCADE)
     system = models.CharField(
         max_length=128,
         blank=True,
@@ -546,11 +553,13 @@ class ComparisonSet(models.Model):
     study_population = models.ForeignKey(
         StudyPopulation,
         related_name='comparison_sets',
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     outcome = models.ForeignKey(
         Outcome,
         related_name='comparison_sets',
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=256,
         help_text="Name the comparison set, following the format <b>Exposure (If log transformed indicate Ln or Logbase) " +
@@ -567,7 +576,8 @@ class ComparisonSet(models.Model):
         related_name="comparison_sets",
         help_text="Which chemical exposure group is associated with this comparison set?",
         blank=True,
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     description = models.TextField(
         blank=True,
         help_text="Provide additional comparison set or extraction details if necessary")
@@ -665,7 +675,8 @@ class Group(models.Model):
 
     comparison_set = models.ForeignKey(
         ComparisonSet,
-        related_name="groups")
+        related_name="groups",
+        on_delete=models.CASCADE)
     group_id = models.PositiveSmallIntegerField()
     name = models.CharField(
         max_length=256,
@@ -801,7 +812,8 @@ class Exposure(models.Model):
 
     study_population = models.ForeignKey(
         StudyPopulation,
-        related_name='exposures')
+        related_name='exposures',
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=128,
         help_text='Name of chemical exposure; use abbreviation. Ex. PFNA; DEHP')
@@ -840,7 +852,8 @@ class Exposure(models.Model):
         'assessment.DoseUnits',
         help_text="Note chemical measurement units (metric system); if no units given, that is, chemical exposure assumed " +
                     "from occupation or survey data, note appropriate exposure categories. Ex. ng/mL; Y/N; electroplating/welding/other" +
-                    HAWC_VIS_NOTE
+                    HAWC_VIS_NOTE,
+        on_delete=models.CASCADE
         )
     metric_description = models.TextField(
         verbose_name="Measurement description",
@@ -1011,7 +1024,8 @@ class CentralTendency(models.Model):
 
     exposure = models.ForeignKey(
         Exposure,
-        related_name='central_tendencies')
+        related_name='central_tendencies',
+        on_delete=models.CASCADE)
 
     estimate = models.FloatField(
         blank=True,
@@ -1146,7 +1160,8 @@ class GroupNumericalDescriptions(models.Model):
 
     group = models.ForeignKey(
         Group,
-        related_name="descriptions")
+        related_name="descriptions",
+        on_delete=models.CASCADE)
     description = models.CharField(
         max_length=128,
         help_text="Description if numeric ages do not make sense for this "
@@ -1229,9 +1244,11 @@ class ResultAdjustmentFactor(models.Model):
     objects = managers.ResultAdjustmentFactorManager()
 
     adjustment_factor = models.ForeignKey('AdjustmentFactor',
-        related_name='resfactors')
+        related_name='resfactors',
+        on_delete=models.CASCADE)
     result = models.ForeignKey('Result',
-        related_name='resfactors')
+        related_name='resfactors',
+        on_delete=models.CASCADE)
     included_in_final_model = models.BooleanField(default=True)
 
     COPY_NAME = "rfactors"
@@ -1287,14 +1304,17 @@ class Result(models.Model):
     )
     outcome = models.ForeignKey(
         Outcome,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     comparison_set = models.ForeignKey(
         ComparisonSet,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     metric = models.ForeignKey(
         ResultMetric,
         related_name="results",
-        help_text="Select the most specific term for the result metric")
+        help_text="Select the most specific term for the result metric",
+        on_delete=models.CASCADE)
     metric_description = models.TextField(
         blank=True,
         help_text="Specify metric if \"other\"; optionally, provide details. Ex. Bayesian hierarchical linear regression estimates (betas) and 95% CI between quartile increases in maternal plasma PFAS concentrations (ug/L) and ponderal index (kg/m^3)"
@@ -1502,10 +1522,12 @@ class GroupResult(models.Model):
 
     result = models.ForeignKey(
         Result,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     group = models.ForeignKey(
         Group,
-        related_name="results")
+        related_name="results",
+        on_delete=models.CASCADE)
     n = models.PositiveIntegerField(
         blank=True,
         null=True,

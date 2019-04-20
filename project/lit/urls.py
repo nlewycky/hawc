@@ -6,8 +6,8 @@ from . import views, api
 
 
 router = DefaultRouter()
-router.register(r'tags', api.ReferenceFilterTag, base_name="tags")
-router.register(r'reference-cleanup', api.ReferenceCleanup, base_name="reference-cleanup")
+router.register(r'tags', api.ReferenceFilterTag, basename="tags")
+router.register(r'reference-cleanup', api.ReferenceCleanup, basename="reference-cleanup")
 
 urlpatterns = [
 
@@ -114,5 +114,5 @@ urlpatterns = [
         views.RISExportInstructions.as_view(),
         name='ris_export_instructions'),
 
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'lit'), namespace='api')),
 ]

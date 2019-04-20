@@ -2,7 +2,7 @@ import logging
 
 from django.apps import apps
 from django.core import exceptions
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Count
 
 from rest_framework import permissions, status, viewsets, decorators, filters
@@ -129,7 +129,7 @@ class AssessmentRootedTagTreeViewset(viewsets.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
 
-    @decorators.detail_route(methods=('patch',))
+    @decorators.action(detail=True, methods=('patch',))
     def move(self, request, *args, **kwargs):
         instance = self.get_object()
         self.assessment = instance.get_assessment()

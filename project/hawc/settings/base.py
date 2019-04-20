@@ -1,7 +1,7 @@
 import os
 import sys
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),
@@ -56,12 +56,11 @@ TEMPLATES = [
 
 
 # Middleware
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'reversion.middleware.RevisionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -189,7 +188,7 @@ PHANTOMJS_PATH = os.getenv('PHANTOMJS_PATH')
 # Logging configuration
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
@@ -231,7 +230,7 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['null'],
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
         'django': {
             'handlers': ['null'],
@@ -278,6 +277,8 @@ CHEMSPIDER_TOKEN = os.getenv('CHEMSPIDER_TOKEN', '')
 
 # Django rest framework settings
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
     'PAGE_SIZE': 10,
     'COERCE_DECIMAL_TO_STRING': False

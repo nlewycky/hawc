@@ -41,10 +41,12 @@ class Task(models.Model):
         settings.AUTH_USER_MODEL,
         blank=True,
         null=True,
-        related_name='tasks')
+        related_name='tasks',
+        on_delete=models.CASCADE)
     study = models.ForeignKey(
         Study,
-        related_name='tasks')
+        related_name='tasks',
+        on_delete=models.CASCADE)
     type = models.PositiveSmallIntegerField(
         choices=TYPE_CHOICES)
     status = models.PositiveSmallIntegerField(

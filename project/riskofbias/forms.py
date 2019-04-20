@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.forms.models import BaseModelFormSet, modelformset_factory
 
 from crispy_forms import layout as cfl

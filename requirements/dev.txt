@@ -1,13 +1,13 @@
 -r base.txt
 
 # django development
-django-debug-toolbar==1.8
-django-extensions==1.9.0
+django-debug-toolbar==1.11
+django-extensions==2.1.6
 
 # tests
 selenium==3.5.0
-pytest==3.6.1
-pytest-django==3.2.1
+pytest==4.4.1
+pytest-django==3.4.8
 
 # docs
 watchdog==0.8.3
@@ -15,6 +15,3 @@ Sphinx==1.6.3
 
 # django_extensions.graph_models
 pydot==1.2.3
-
-# notebooks
-jupyter==1.0.0

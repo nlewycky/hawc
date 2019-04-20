@@ -6,7 +6,7 @@ import collections
 
 from django.db import models
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.html import strip_tags
 
 from reversion import revisions as reversion
@@ -25,7 +25,8 @@ class RiskOfBiasDomain(models.Model):
 
     assessment = models.ForeignKey(
         'assessment.Assessment',
-        related_name='rob_domains')
+        related_name='rob_domains',
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=128)
     description = models.TextField(
@@ -149,7 +150,8 @@ class RiskOfBiasMetric(models.Model):
 
     domain = models.ForeignKey(
         RiskOfBiasDomain,
-        related_name='metrics')
+        related_name='metrics',
+        on_delete=models.CASCADE)
     name = models.CharField(
         max_length=256)
     short_name = models.CharField(
@@ -214,13 +216,15 @@ class RiskOfBias(models.Model):
     study = models.ForeignKey(
         'study.Study',
         related_name='riskofbiases',
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     final = models.BooleanField(
         default=False,
         db_index=True)
     author = models.ForeignKey(
         HAWCUser,
-        related_name='riskofbiases')
+        related_name='riskofbiases',
+        on_delete=models.CASCADE)
     active = models.BooleanField(
         default=False,
         db_index=True)
@@ -440,10 +444,12 @@ class RiskOfBiasScore(models.Model):
 
     riskofbias = models.ForeignKey(
         RiskOfBias,
-        related_name='scores')
+        related_name='scores',
+        on_delete=models.CASCADE)
     metric = models.ForeignKey(
         RiskOfBiasMetric,
-        related_name='scores')
+        related_name='scores',
+        on_delete=models.CASCADE)
     score = models.PositiveSmallIntegerField(
         choices=RISK_OF_BIAS_SCORE_CHOICES,
         default=10)
@@ -543,7 +549,8 @@ class RiskOfBiasAssessment(models.Model):
 
     assessment = models.OneToOneField(
         Assessment,
-        related_name='rob_settings')
+        related_name='rob_settings',
+        on_delete=models.CASCADE)
     number_of_reviewers = models.PositiveSmallIntegerField(
         default=1)
     help_text = models.TextField(

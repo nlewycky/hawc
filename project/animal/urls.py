@@ -8,32 +8,32 @@ from . import views, api
 router = DefaultRouter()
 router.register(r'endpoint',
                 api.Endpoint,
-                base_name="endpoint")
+                basename="endpoint")
 router.register(r'experiment',
                 api.Experiment,
-                base_name="experiment")
+                basename="experiment")
 router.register(r'animal-group',
                 api.AnimalGroup,
-                base_name="animal_group")
+                basename="animal_group")
 router.register(r'experiment-cleanup',
                 api.ExperimentCleanupFieldsView,
-                base_name="experiment-cleanup")
+                basename="experiment-cleanup")
 router.register(r'animal_group-cleanup',
                 api.AnimalGroupCleanupFieldsView,
-                base_name="animal_group-cleanup")
+                basename="animal_group-cleanup")
 router.register(r'endpoint-cleanup',
                 api.EndpointCleanupFieldsView,
-                base_name="endpoint-cleanup")
+                basename="endpoint-cleanup")
 router.register(r'dosingregime-cleanup',
                 api.DosingRegimeCleanupFieldsView,
-                base_name="dosingregime-cleanup")
+                basename="dosingregime-cleanup")
 router.register(r'dose-units',
                 api.DoseUnits,
-                base_name="dose_units")
+                basename="dose_units")
 
 
 urlpatterns = [
-    url(r'^api/', include(router.urls, namespace='api')),
+    url(r'^api/', include((router.urls, 'animal'), namespace='api')),
 
     # Overall views
     url(r'^assessment/(?P<pk>\d+)/full-export/$',
