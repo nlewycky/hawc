@@ -58,7 +58,9 @@
           {% block topnavbar %}
             <div class="nav-collapse collapse">
               <ul class="nav pull-right">
+                {% if user.is_authenticated %}
                 <li><a href="{% url 'contact' %}">Contact</a></li>
+                {% endif %}
                 <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="{% url 'assessment:public_list' %}">Public Assessments</a></li>
 
